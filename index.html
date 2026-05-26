@@ -393,6 +393,68 @@ button, [data-add], [data-qty], [data-open-cart], [data-close-cart], [data-filte
 }
 
 @keyframes slideInItem{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:translateX(0)}}
+
+
+/* ===== CORREÇÃO MOBILE DO LOADING =====
+   Mantém "MERCADO PAQUERÊ" por extenso em uma linha no celular. */
+#loading-screen{
+  padding-left:18px;
+  padding-right:18px;
+  overflow:hidden;
+}
+.ls-logo-wrap{
+  width:100%;
+  max-width:100vw;
+}
+.ls-title{
+  width:100%;
+  max-width:100%;
+  padding:0 10px;
+  text-align:center;
+  white-space:nowrap;
+  line-height:1.04!important;
+  box-sizing:border-box;
+}
+@media(max-width:480px){
+  #loading-screen{
+    gap:24px;
+    padding-left:12px;
+    padding-right:12px;
+  }
+  .ls-logo-wrap{
+    gap:14px;
+  }
+  .ls-icon{
+    font-size:38px!important;
+  }
+  .ls-title{
+    font-size:clamp(24px,7.5vw,32px)!important;
+    letter-spacing:.035em!important;
+    white-space:nowrap!important;
+    line-height:1.04!important;
+    padding:0 6px!important;
+    transform:none!important;
+  }
+  .ls-sub{
+    font-size:clamp(9px,2.35vw,12px)!important;
+    letter-spacing:.22em!important;
+    white-space:nowrap!important;
+  }
+  .ls-bar-wrap{
+    width:min(280px,78vw)!important;
+  }
+}
+@media(max-width:360px){
+  .ls-title{
+    font-size:clamp(21px,7.1vw,27px)!important;
+    letter-spacing:.025em!important;
+  }
+  .ls-sub{
+    font-size:9px!important;
+    letter-spacing:.18em!important;
+  }
+}
+
 </style>
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
