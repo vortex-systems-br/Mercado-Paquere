@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8"/>
@@ -14,6 +13,18 @@
 <meta name="twitter:description" content="Carnes frescas, combos e pedido rápido pelo WhatsApp. Araçatuba/SP."/>
 <link rel="canonical" href="https://mercadopaquere.com.br"/>
 <title>Mercado Paquere | Açougue &amp; Mini Mercado</title>
+
+<!-- CORREÇÃO: preconnect para recursos externos -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="preconnect" href="https://www.googletagmanager.com"/>
+
+<!-- CORREÇÃO: Playfair Display importada corretamente -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"/>
+
+<!-- CORREÇÃO: preload da imagem hero (LCP) -->
+<link rel="preload" as="image" href="assets/images/imagem-001.webp" fetchpriority="high"/>
+
 <style>
 :root{
   --bg:#070504;--bg2:#100b08;--card:#1b120e;--card2:#241813;--cream:#fff3e4;--muted:#c6b4a1;
@@ -38,8 +49,8 @@ a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}
 .hero{position:relative;min-height:calc(100vh - 72px);display:grid;align-items:center;padding:68px 0;background:#070504}
 .hero:before{content:"";position:absolute;inset:0;background:url('assets/images/imagem-001.webp') center/cover no-repeat;opacity:.58;transform:scale(1.02)}
 .hero:after{content:"";position:absolute;inset:0;background:
-linear-gradient(90deg,rgba(7,5,4,.98) 0%,rgba(7,5,4,.84) 48%,rgba(7,5,4,.30) 100%),
-radial-gradient(circle at 20% 40%,rgba(198,31,47,.20),transparent 38%)}
+  linear-gradient(90deg,rgba(7,5,4,.98) 0%,rgba(7,5,4,.84) 48%,rgba(7,5,4,.30) 100%),
+  radial-gradient(circle at 20% 40%,rgba(198,31,47,.20),transparent 38%)}
 .hero .container{position:relative;z-index:2}
 .hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:34px;align-items:center}
 .hero-copy{max-width:690px}
@@ -57,7 +68,7 @@ radial-gradient(circle at 20% 40%,rgba(198,31,47,.20),transparent 38%)}
 .floating-card{position:absolute;left:18px;right:18px;bottom:18px;background:rgba(7,5,4,.78);border:1px solid var(--line);border-radius:20px;padding:16px;backdrop-filter:blur(12px)}
 .floating-card strong{display:block;font:900 22px Georgia,serif}.floating-card span{color:var(--muted);font-size:14px}
 .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:34px}
-.stat{background:rgba(255,255,255,.055);border:1px solid var(--line);border-radius:18px;padding:15px;backdrop-filter:blur(10px)}
+.stat{background:rgba(255,255,255,.055);border:1px solid var(--line);border-radius:18px;padding:15px}
 .stat strong{display:block;font-size:21px}.stat span{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.7px}
 .strip{background:var(--bg2);border-block:1px solid var(--line);padding:16px 0}.strip-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.strip-item{color:#e0cdbc;font-weight:700;font-size:14px}
 section{padding:78px 0}.dark{background:var(--bg2);border-block:1px solid var(--line)}
@@ -91,17 +102,26 @@ section{padding:78px 0}.dark{background:var(--bg2);border-block:1px solid var(--
 .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.product-card{display:flex;flex-direction:column}.product-card.hidden{display:none}.product-img{aspect-ratio:4/3;border-bottom:1px solid var(--line)}.product-body{display:flex;flex-direction:column;flex:1}
 .steps-grid,.info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px}.step-card,.info-card{padding:24px}.step-num{width:46px;height:46px;border-radius:14px;background:rgba(217,169,75,.14);border:1px solid var(--goldLine);display:grid;place-items:center;color:var(--gold);font-weight:900;margin-bottom:14px}.step-card h3,.info-card h3{font:900 20px Georgia,serif;margin-bottom:8px}.step-card p,.info-card p,.info-card li{color:var(--muted);font-size:14px}.info-card ul{padding-left:20px;margin-top:8px}
 .footer{padding:42px 0;border-top:1px solid var(--line);background:#070504;color:var(--muted)}.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:28px}.footer h3{font:900 24px Georgia,serif;color:var(--cream);margin-bottom:10px}.footer a{display:block;color:var(--muted);margin-bottom:8px}
-.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.68);z-index:100;opacity:0;pointer-events:none;backdrop-filter:blur(3px);transition:opacity .26s ease}.cart-overlay.open{opacity:1;pointer-events:auto;display:block}
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.68);z-index:100;opacity:0;pointer-events:none;backdrop-filter:blur(3px);transition:opacity .26s ease;will-change:opacity}.cart-overlay.open{opacity:1;pointer-events:auto}
 .cart-drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100vw);height:100dvh;background:linear-gradient(180deg,#120b08 0%,#090604 100%);z-index:101;border-left:1px solid var(--goldLine);transform:translateX(100%);will-change:transform;transition:transform .26s cubic-bezier(.4,0,.2,1);display:grid;grid-template-rows:auto minmax(0,1fr) auto;box-shadow:-34px 0 90px rgba(0,0,0,.56)}
 .cart-drawer.open{transform:translateX(0)}
 .cart-head{padding:22px 24px 18px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;gap:16px;background:linear-gradient(135deg,rgba(198,31,47,.14),rgba(217,169,75,.07))}
 .cart-kicker{display:inline-flex;color:var(--gold);font-size:11px;text-transform:uppercase;letter-spacing:1.8px;font-weight:900;margin-bottom:4px}.cart-head h2{font:900 30px Georgia,serif;line-height:1}.cart-head-sub{color:var(--muted);font-size:13px;margin-top:7px;max-width:360px}.close{background:rgba(255,255,255,.04);color:var(--cream);border:1px solid var(--line);border-radius:13px;width:42px;height:42px;cursor:pointer;font-size:20px;flex:0 0 42px;position:relative;z-index:10;pointer-events:auto}.close:hover{border-color:var(--goldLine);background:rgba(255,255,255,.08)}
 .cart-scroll{min-height:0;overflow:auto;padding:16px 22px 18px;scrollbar-width:thin;scrollbar-color:rgba(217,169,75,.45) rgba(255,255,255,.05)}
 .cart-summary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}.cart-summary>div{border:1px solid var(--line);border-radius:17px;background:rgba(255,255,255,.035);padding:12px 14px}.cart-summary span{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1.2px;font-weight:900}.cart-summary strong{display:block;margin-top:3px;color:var(--cream);font-size:17px}
-.cart-list{padding:0;overflow:visible;min-height:90px}.empty{text-align:center;color:var(--muted);padding:34px 18px;border:1px dashed rgba(255,255,255,.12);border-radius:18px;background:rgba(255,255,255,.025)}
+.cart-list{padding:0;overflow:visible;min-height:90px;contain:layout style}.empty{text-align:center;color:var(--muted);padding:34px 18px;border:1px dashed rgba(255,255,255,.12);border-radius:18px;background:rgba(255,255,255,.025)}
 .cart-item{display:grid;grid-template-columns:62px minmax(0,1fr) auto;gap:12px;align-items:center;border:1px solid rgba(255,255,255,.075);background:rgba(255,255,255,.03);border-radius:18px;padding:10px;margin-bottom:10px}.cart-thumb{width:62px;height:62px;border-radius:14px;flex:0 0 62px;background-size:cover;background-position:center}.cart-info{min-width:0}.cart-info strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cart-info span{color:var(--muted);font-size:13px}.qty{display:flex;align-items:center;gap:8px}.qty button{width:32px;height:32px;border-radius:10px;border:1px solid var(--line);background:#211711;color:var(--cream);cursor:pointer;font-weight:900}.qty b{min-width:25px;text-align:center}
 .checkout-title{display:flex;justify-content:space-between;gap:12px;align-items:flex-end;margin:16px 0 10px}.checkout-title strong{font:900 17px Georgia,serif}.checkout-title span{color:var(--muted);font-size:12px;text-align:right}
-.checkout{padding:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:900}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);background:#0c0806;color:var(--cream);border-radius:13px;padding:11px 12px;outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--goldLine);box-shadow:0 0 0 3px rgba(217,169,75,.08)}.field textarea{min-height:64px;resize:vertical}
+.checkout{padding:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}
+/* CORREÇÃO: label com asterisco de obrigatório */
+.field label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:900;display:flex;gap:4px;align-items:center}
+.field label .req{color:var(--red);font-size:13px;line-height:1}
+.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);background:#0c0806;color:var(--cream);border-radius:13px;padding:11px 12px;outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--goldLine);box-shadow:0 0 0 3px rgba(217,169,75,.08)}
+.field input.field-error,.field select.field-error,.field textarea.field-error{border-color:var(--red)!important;box-shadow:0 0 0 3px rgba(198,31,47,.15)!important}
+.field-msg{font-size:11px;color:#ff6b6b;margin-top:2px;display:none}
+.field-msg.visible{display:block}
+.field textarea{min-height:64px;resize:vertical}
 .cart-foot{padding:16px 22px 18px;border-top:1px solid var(--line);background:linear-gradient(180deg,rgba(18,11,8,.96),#080504);box-shadow:0 -20px 50px rgba(0,0,0,.34)}
 .total{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px}.total span{color:var(--cream);font-weight:800}.total strong{font:900 28px Georgia,serif;color:var(--gold);white-space:nowrap}
 .cart-actions{display:grid;grid-template-columns:.85fr 1.35fr;gap:10px}.clear-order,.whats{min-height:54px;border:0;border-radius:15px;padding:12px 14px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.15}.clear-order{background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--cream)}.clear-order:hover{background:rgba(255,255,255,.1)}.clear-order:disabled{opacity:.42;cursor:not-allowed}.whats{background:linear-gradient(135deg,#25D366,#129246);color:#fff;box-shadow:0 16px 34px rgba(37,211,102,.18)}.whats:hover{filter:brightness(1.06)}.note{color:var(--muted);font-size:12px;text-align:center;margin-top:10px}
@@ -112,7 +132,6 @@ section{padding:78px 0}.dark{background:var(--bg2);border-block:1px solid var(--
   body{padding-bottom:calc(86px + var(--safe))}.nav-links,.cart-btn{display:none}.nav{height:64px}.hero{min-height:auto;padding:58px 0 42px}.hero:after{background:linear-gradient(180deg,rgba(7,5,4,.72),rgba(7,5,4,.98))}.hero h1{font-size:43px;letter-spacing:-1px}.hero p{font-size:16px}.hero-stats,.strip-grid,.steps-grid,.info-grid,.products-grid,.oferta-grid,.combo-grid{grid-template-columns:1fr}section{padding:54px 0}.catalog-tools{align-items:stretch}.search{width:100%}.products-grid{gap:14px}.footer-grid{grid-template-columns:1fr}.checkout{grid-template-columns:1fr}.cart-actions{grid-template-columns:1fr}.cart-head h2{font-size:26px}.cart-scroll{padding:14px}.cart-foot{padding:14px}
   .sticky-mobile{position:fixed;left:0;right:0;bottom:0;z-index:82;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px calc(10px + var(--safe));background:linear-gradient(180deg,transparent,rgba(7,5,4,.96) 35%)}.sticky-mobile button,.sticky-mobile a{border:0;border-radius:15px;padding:14px 10px;text-align:center;font-weight:900;color:#fff}.sticky-mobile button{background:var(--red)}.sticky-mobile a{background:var(--green)}.toast{width:calc(100% - 28px);text-align:center;border-radius:16px}
 }
-
 @media(max-width:760px){
   .oferta-card{grid-template-rows:auto}
   .combo-card{grid-template-rows:auto}
@@ -122,214 +141,59 @@ section{padding:78px 0}.dark{background:var(--bg2);border-block:1px solid var(--
   .hero{padding-top:46px}
   .oferta-grid,.combo-grid,.products-grid{gap:18px}
 }
-
-
-.add-btn, .btn-primary, .btn-secondary, .cart-btn, .whats, .filter-btn, .qty button, [data-open-cart], [data-close-cart]{
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-.add-btn:active, .btn-primary:active, .btn-secondary:active, .cart-btn:active, .whats:active{
-  transform: scale(.97);
-}
-
-
-.add-btn{
-  pointer-events:auto!important;
-  user-select:none;
-}
-.add-btn.added-feedback{
-  background:linear-gradient(135deg,#25D366,#159447)!important;
-}
-
+.add-btn,.btn-primary,.btn-secondary,.cart-btn,.whats,.filter-btn,.qty button,[data-open-cart],[data-close-cart]{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.add-btn:active,.btn-primary:active,.btn-secondary:active,.cart-btn:active,.whats:active{transform:scale(.97)}
+.add-btn{pointer-events:auto!important;user-select:none}
+.add-btn.added-feedback{background:linear-gradient(135deg,#25D366,#118c43)!important;color:#fff!important}
 .cart-item.just-added{animation:slideInItem .3s cubic-bezier(.34,1.56,.64,1) forwards}
-@keyframes cartPulse{
-  0%{transform:scale(.985)}
-  45%{transform:scale(1.018)}
-  100%{transform:scale(1)}
-}
+@keyframes slideInItem{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:translateX(0)}}
+.cart-btn.pulse-cart,.sticky-mobile button.pulse-cart{animation:cartButtonPulse .55s ease}
+@keyframes cartButtonPulse{0%{transform:scale(1)}45%{transform:scale(1.045)}100%{transform:scale(1)}}
+.product-card,.oferta-card,.combo-card,.step-card{opacity:0;transform:translateY(28px);transition:opacity .5s ease,transform .5s ease}
+.product-card.visible,.oferta-card.visible,.combo-card.visible,.step-card.visible{opacity:1;transform:translateY(0)}
+button,[data-add],[data-qty],[data-open-cart],[data-close-cart],[data-filter]{touch-action:manipulation}
 
-
-/* imagens premium individuais introduzidas */
-.img-miolo_paleta{background-image:url('assets/images/imagem-010.webp');background-position:center center;}
-.img-miolo_acem{background-image:url('assets/images/imagem-011.webp');background-position:center center;}
-.img-ponta_peito{background-image:url('assets/images/imagem-012.webp');background-position:center center;}
-.img-ponta_peito_osso{background-image:url('assets/images/imagem-013.webp');background-position:center center;}
-.img-acem{background-image:url('assets/images/imagem-014.webp');background-position:center center;}
-.img-costela_ripa{background-image:url('assets/images/imagem-015.webp');background-position:center center;}
-.img-costelao{background-image:url('assets/images/imagem-016.webp');background-position:center center;}
-.img-picanha{background-image:url('assets/images/imagem-017.webp');background-position:center center;}
-.img-contra_file{background-image:url('assets/images/imagem-018.webp');background-position:center center;}
-.img-fraldinha{background-image:url('assets/images/imagem-019.webp');background-position:center center;}
-.img-linguicas_premium{background-image:url('assets/images/imagem-020.webp');background-position:center center;}
-.img-osso_buco_real{background-image:url('assets/images/imagem-021.webp');background-position:center center;}
-.img-ling_calabresa_real{background-image:url('assets/images/imagem-022.webp');background-position:center center;}
-.img-ling_aurora_real{background-image:url('assets/images/imagem-023.webp');background-position:center center;}
-.img-ling_perdigao_real{background-image:url('assets/images/imagem-024.webp');background-position:center center;}
-.img-ling_sadia_real{background-image:url('assets/images/imagem-025.webp');background-position:center center;}
+/* ===== IMAGENS INDIVIDUAIS ===== */
+.img-miolo_paleta{background-image:url('assets/images/imagem-010.webp');background-position:center center}
+.img-miolo_acem{background-image:url('assets/images/imagem-011.webp');background-position:center center}
+.img-ponta_peito{background-image:url('assets/images/imagem-012.webp');background-position:center center}
+.img-ponta_peito_osso{background-image:url('assets/images/imagem-013.webp');background-position:center center}
+.img-acem{background-image:url('assets/images/imagem-014.webp');background-position:center center}
+.img-costela_ripa{background-image:url('assets/images/imagem-015.webp');background-position:center center}
+.img-costelao{background-image:url('assets/images/imagem-016.webp');background-position:center center}
+.img-picanha{background-image:url('assets/images/imagem-017.webp');background-position:center center}
+.img-contra_file{background-image:url('assets/images/imagem-018.webp');background-position:center center}
+.img-fraldinha{background-image:url('assets/images/imagem-019.webp');background-position:center center}
+.img-linguicas_premium{background-image:url('assets/images/imagem-020.webp');background-position:center center}
+.img-osso_buco_real{background-image:url('assets/images/imagem-021.webp');background-position:center center}
+.img-ling_calabresa_real{background-image:url('assets/images/imagem-022.webp');background-position:center center}
+.img-ling_aurora_real{background-image:url('assets/images/imagem-023.webp');background-position:center center}
+.img-ling_perdigao_real{background-image:url('assets/images/imagem-024.webp');background-position:center center}
+.img-ling_sadia_real{background-image:url('assets/images/imagem-025.webp');background-position:center center}
+.img-coxinha_asa_real{background-image:url('assets/images/imagem-026.webp');background-position:center center}
+.img-file_frango_real{background-image:url('assets/images/imagem-027.webp');background-position:center center}
+.img-bisteca_porco_real{background-image:url('assets/images/imagem-028.webp');background-position:center center}
+.img-lombo_suino_real{background-image:url('assets/images/imagem-029.webp');background-position:center center}
+.img-pernil_real{background-image:url('assets/images/imagem-030.webp');background-position:center center}
 .photo-label{backdrop-filter:blur(6px);box-shadow:0 8px 22px rgba(0,0,0,.24);max-width:calc(100% - 24px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-.img-coxinha_asa_real{background-image:url('assets/images/imagem-026.webp');background-position:center center;}
-.img-file_frango_real{background-image:url('assets/images/imagem-027.webp');background-position:center center;}
-.img-bisteca_porco_real{background-image:url('assets/images/imagem-028.webp');background-position:center center;}
-.img-lombo_suino_real{background-image:url('assets/images/imagem-029.webp');background-position:center center;}
-.img-pernil_real{background-image:url('assets/images/imagem-030.webp');background-position:center center;}
-
-/* UX: adicionar produto não abre a lateral; mantém o catálogo clicável para adicionar vários itens */
-.add-btn.added-feedback{
-  background:linear-gradient(135deg,#25D366,#118c43)!important;
-  color:#fff!important;
-}
-.cart-btn.pulse-cart, .sticky-mobile button.pulse-cart{
-  animation:cartButtonPulse .55s ease;
-}
-@keyframes cartButtonPulse{
-  0%{transform:scale(1)}
-  45%{transform:scale(1.045)}
-  100%{transform:scale(1)}
-}
-
-
-/* Animações de entrada */
-.product-card, .oferta-card, .combo-card, .step-card {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-.product-card.visible, .oferta-card.visible, .combo-card.visible, .step-card.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-
 /* ===== LOADING SCREEN ===== */
-#loading-screen{
-  position:fixed;inset:0;z-index:9999;
-  background:#070504;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;
-  transition:opacity .7s ease, visibility .7s ease;
-}
+#loading-screen{position:fixed;inset:0;z-index:9999;background:#070504;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;transition:opacity .7s ease,visibility .7s ease}
 #loading-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
-
 .ls-logo-wrap{display:flex;flex-direction:column;align-items:center;gap:18px}
+.ls-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(36px,8vw,72px);font-weight:900;letter-spacing:.08em;color:transparent;background:linear-gradient(135deg,#fff3e4 0%,#d9a94b 40%,#fff3e4 60%,#d9a94b 100%);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;animation:shimmer 2.4s linear infinite,fadeInUp .9s ease forwards;opacity:0}
+.ls-sub{font-family:'Playfair Display',Georgia,serif;font-size:clamp(12px,2.5vw,16px);letter-spacing:.35em;color:#c6b4a1;text-transform:uppercase;opacity:0;animation:fadeInUp .9s ease .3s forwards}
+.ls-divider{width:60px;height:1.5px;background:linear-gradient(90deg,transparent,#d9a94b,transparent);opacity:0;animation:fadeInUp .6s ease .5s forwards,pulse-line 2s ease 1.5s infinite}
+.ls-bar-wrap{width:min(280px,70vw);height:3px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden}
+.ls-bar{height:100%;width:0%;background:linear-gradient(90deg,#c61f2f,#d9a94b);border-radius:99px;animation:loadBar 1.8s cubic-bezier(.4,0,.2,1) .2s forwards}
+.ls-icon{font-size:48px;opacity:0;animation:bounceIn .6s ease .1s forwards;filter:drop-shadow(0 0 18px rgba(217,169,75,.5))}
+@keyframes shimmer{0%{background-position:200% center}100%{background-position:-200% center}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bounceIn{0%{opacity:0;transform:scale(.5) translateY(20px)}70%{opacity:1;transform:scale(1.15)}100%{opacity:1;transform:scale(1)}}
+@keyframes loadBar{0%{width:0%}60%{width:75%}100%{width:100%}}
+@keyframes pulse-line{0%,100%{opacity:.4;width:60px}50%{opacity:1;width:100px}}
 
-/* Letras animadas */
-.ls-title{
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(36px, 8vw, 72px);
-  font-weight: 900;
-  letter-spacing: .08em;
-  color: transparent;
-  background: linear-gradient(135deg, #fff3e4 0%, #d9a94b 40%, #fff3e4 60%, #d9a94b 100%);
-  background-size: 300% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  animation: shimmer 2.4s linear infinite, fadeInUp .9s ease forwards;
-  opacity: 0;
-}
-.ls-sub{
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(12px, 2.5vw, 16px);
-  letter-spacing: .35em;
-  color: #c6b4a1;
-  text-transform: uppercase;
-  opacity: 0;
-  animation: fadeInUp .9s ease .3s forwards;
-}
-.ls-divider{
-  width: 60px; height: 1.5px;
-  background: linear-gradient(90deg, transparent, #d9a94b, transparent);
-  opacity: 0;
-  animation: fadeInUp .6s ease .5s forwards, pulse-line 2s ease 1.5s infinite;
-}
-
-/* Barra de progresso */
-.ls-bar-wrap{
-  width: min(280px, 70vw);
-  height: 3px;
-  background: rgba(255,255,255,.1);
-  border-radius: 99px;
-  overflow: hidden;
-}
-.ls-bar{
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #c61f2f, #d9a94b);
-  border-radius: 99px;
-  animation: loadBar 1.8s cubic-bezier(.4,0,.2,1) .2s forwards;
-}
-
-/* Ícone de carne animado */
-.ls-icon{
-  font-size: 48px;
-  opacity: 0;
-  animation: bounceIn .6s ease .1s forwards;
-  filter: drop-shadow(0 0 18px rgba(217,169,75,.5));
-}
-
-@keyframes shimmer{
-  0%{background-position:200% center}
-  100%{background-position:-200% center}
-}
-@keyframes fadeInUp{
-  from{opacity:0;transform:translateY(22px)}
-  to{opacity:1;transform:translateY(0)}
-}
-@keyframes bounceIn{
-  0%{opacity:0;transform:scale(.5) translateY(20px)}
-  70%{opacity:1;transform:scale(1.15)}
-  100%{opacity:1;transform:scale(1)}
-}
-@keyframes loadBar{
-  0%{width:0%}
-  60%{width:75%}
-  100%{width:100%}
-}
-@keyframes pulse-line{
-  0%,100%{opacity:.4;width:60px}
-  50%{opacity:1;width:100px}
-}
-
-
-/* ===== HERO BRAND TITLE ===== */
-.hero-brand-title{display:flex;flex-direction:column;gap:4px;margin-bottom:8px}
-.hbt-small{
-  font-family:'Playfair Display',Georgia,serif;
-  font-size:clamp(12px,2vw,15px);
-  letter-spacing:.4em;
-  text-transform:uppercase;
-  color:var(--gold);
-  opacity:.85;
-}
-.hbt-main{
-  font-family:'Playfair Display',Georgia,serif;
-  font-size:clamp(48px,9vw,96px);
-  font-weight:700;
-  line-height:1;
-  color:var(--cream);
-  letter-spacing:-.01em;
-}
-.hbt-accent{
-  font-family:'Playfair Display',Georgia,serif;
-  font-size:clamp(48px,9vw,96px);
-  font-weight:900;
-  line-height:1;
-  letter-spacing:-.01em;
-  color:transparent;
-  background:linear-gradient(135deg,#d9a94b 0%,#f5d08a 45%,#d9a94b 100%);
-  -webkit-background-clip:text;
-  background-clip:text;
-  text-shadow:none;
-}
-.hbt-divider{
-  display:block;
-  width:72px;height:3px;
-  background:linear-gradient(90deg,var(--red),var(--gold));
-  border-radius:99px;
-  margin-top:12px;
-}
-
-
-/* ===== SEÇÃO MAPA ===== */
+/* ===== MAPA ===== */
 .map-section{padding:80px 0;background:var(--bg2)}
 .map-header{text-align:center;margin-bottom:48px}
 .map-title{font:700 clamp(26px,4vw,38px) Georgia,serif;color:var(--cream);margin:8px 0 12px}
@@ -337,126 +201,22 @@ section{padding:78px 0}.dark{background:var(--bg2);border-block:1px solid var(--
 .map-desc{color:var(--muted);font-size:15px}
 .map-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:32px;align-items:start}
 @media(max-width:760px){.map-grid{grid-template-columns:1fr}}
-
 .map-info-cards{display:flex;flex-direction:column;gap:14px}
-.map-info-card{
-  display:flex;align-items:flex-start;gap:14px;
-  background:var(--card);border:1px solid var(--goldLine);
-  border-radius:16px;padding:16px 18px;
-}
+.map-info-card{display:flex;align-items:flex-start;gap:14px;background:var(--card);border:1px solid var(--goldLine);border-radius:16px;padding:16px 18px}
 .mic-icon{font-size:24px;flex-shrink:0;margin-top:2px}
 .map-info-card strong{display:block;color:var(--cream);font-size:14px;font-weight:700;margin-bottom:3px}
 .map-info-card span{color:var(--muted);font-size:13px;line-height:1.5}
-
-.map-wpp-btn,.map-gmaps-btn{
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  border-radius:14px;padding:14px 20px;font-weight:700;font-size:14px;
-  text-decoration:none;transition:transform .15s,box-shadow .15s;cursor:pointer;
-}
-.map-wpp-btn{
-  background:var(--green);color:#fff;
-  box-shadow:0 8px 24px rgba(37,211,102,.25);
-}
+.map-wpp-btn,.map-gmaps-btn{display:flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;padding:14px 20px;font-weight:700;font-size:14px;text-decoration:none;transition:transform .15s,box-shadow .15s;cursor:pointer}
+.map-wpp-btn{background:var(--green);color:#fff;box-shadow:0 8px 24px rgba(37,211,102,.25)}
 .map-wpp-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(37,211,102,.35)}
-.map-gmaps-btn{
-  background:var(--card2);color:var(--cream);
-  border:1px solid var(--goldLine);
-}
+.map-gmaps-btn{background:var(--card2);color:var(--cream);border:1px solid var(--goldLine)}
 .map-gmaps-btn:hover{transform:translateY(-2px);border-color:var(--gold)}
-
-.map-embed-wrap{
-  position:relative;border-radius:20px;overflow:hidden;
-  border:1px solid var(--goldLine);
-  box-shadow:0 24px 60px rgba(0,0,0,.4);
-}
+.map-embed-wrap{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--goldLine);box-shadow:0 24px 60px rgba(0,0,0,.4)}
 .map-iframe{width:100%;height:420px;border:none;display:block;filter:saturate(.85) brightness(.9)}
-.map-badge{
-  position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
-  background:rgba(7,5,4,.85);backdrop-filter:blur(8px);
-  color:var(--cream);font-size:13px;font-weight:700;
-  padding:8px 18px;border-radius:99px;
-  border:1px solid var(--goldLine);white-space:nowrap;
-}
-
-
-/* Performance mobile - remove 300ms tap delay */
-button, [data-add], [data-qty], [data-open-cart], [data-close-cart], [data-filter] {
-  touch-action: manipulation;
-}
-/* Isolamento de layout no carrinho */
-#cartList {
-  contain: layout style;
-}
-/* Overlay com GPU */
-.cart-overlay {
-  will-change: opacity;
-}
-
-@keyframes slideInItem{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:translateX(0)}}
-
-
-/* ===== CORREÇÃO MOBILE DO LOADING =====
-   Mantém "MERCADO PAQUERÊ" por extenso em uma linha no celular. */
-#loading-screen{
-  padding-left:18px;
-  padding-right:18px;
-  overflow:hidden;
-}
-.ls-logo-wrap{
-  width:100%;
-  max-width:100vw;
-}
-.ls-title{
-  width:100%;
-  max-width:100%;
-  padding:0 10px;
-  text-align:center;
-  white-space:nowrap;
-  line-height:1.04!important;
-  box-sizing:border-box;
-}
-@media(max-width:480px){
-  #loading-screen{
-    gap:24px;
-    padding-left:12px;
-    padding-right:12px;
-  }
-  .ls-logo-wrap{
-    gap:14px;
-  }
-  .ls-icon{
-    font-size:38px!important;
-  }
-  .ls-title{
-    font-size:clamp(24px,7.5vw,32px)!important;
-    letter-spacing:.035em!important;
-    white-space:nowrap!important;
-    line-height:1.04!important;
-    padding:0 6px!important;
-    transform:none!important;
-  }
-  .ls-sub{
-    font-size:clamp(9px,2.35vw,12px)!important;
-    letter-spacing:.22em!important;
-    white-space:nowrap!important;
-  }
-  .ls-bar-wrap{
-    width:min(280px,78vw)!important;
-  }
-}
-@media(max-width:360px){
-  .ls-title{
-    font-size:clamp(21px,7.1vw,27px)!important;
-    letter-spacing:.025em!important;
-  }
-  .ls-sub{
-    font-size:9px!important;
-    letter-spacing:.18em!important;
-  }
-}
-
+.map-badge{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:rgba(7,5,4,.85);backdrop-filter:blur(8px);color:var(--cream);font-size:13px;font-weight:700;padding:8px 18px;border-radius:99px;border:1px solid var(--goldLine);white-space:nowrap}
 </style>
-<!-- Google Analytics 4 -->
+
+<!-- Google Analytics 4 — substitua G-XXXXXXXXXX pelo seu ID real -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -464,6 +224,7 @@ button, [data-add], [data-qty], [data-open-cart], [data-close-cart], [data-filte
   gtag('js', new Date());
   gtag('config', 'G-XXXXXXXXXX');
 </script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -472,17 +233,19 @@ button, [data-add], [data-qty], [data-open-cart], [data-close-cart], [data-filte
   "description": "Açougue e Mini Mercado em Araçatuba/SP. Carnes frescas, combos e pedido pelo WhatsApp.",
   "address": {
     "@type": "PostalAddress",
+    "streetAddress": "Cabo PM Marcos Volnei Guerra, 13",
     "addressLocality": "Araçatuba",
     "addressRegion": "SP",
     "addressCountry": "BR"
   },
   "telephone": "+5518981309332",
   "url": "https://mercadopaquere.com.br",
-  "openingHours": "Mo-Sa 07:00-20:00"
+  "openingHours": ["Mo-Sa 07:00-20:00","Su 07:00-13:00"]
 }
 </script>
 </head>
 <body>
+
 <!-- LOADING SCREEN -->
 <div id="loading-screen" role="status" aria-label="Carregando Mercado Paquerê">
   <div class="ls-logo-wrap">
@@ -495,458 +258,291 @@ button, [data-add], [data-qty], [data-open-cart], [data-close-cart], [data-filte
     <div class="ls-bar"></div>
   </div>
 </div>
+
 <header class="topbar">
 <div class="container nav">
-<a class="logo" href="#">
-<div class="logo-mark" style="background:none;padding:0;overflow:hidden"><img src="assets/images/imagem-031.webp" alt="Mercado Paquere" style="width:44px;height:44px;border-radius:14px;object-fit:cover;display:block"/></div>
-<div><strong>Paquere</strong><span>Açougue &amp; Mini Mercado</span></div>
-</a>
-<nav class="nav-links">
-<a href="#ofertas">Ofertas</a><a href="#combos">Combos</a><a href="#catalogo">Carnes</a><a href="#pedido">Como pedir</a><a href="#como-chegar">Como chegar</a>
-</nav>
-<button class="cart-btn" data-open-cart="" aria-label="Abrir carrinho de pedido" type="button">🛒 Pedido <span class="count-pill" id="cartCount">0</span></button>
+  <a class="logo" href="#">
+    <div class="logo-mark" style="background:none;padding:0;overflow:hidden">
+      <img src="assets/images/imagem-031.webp" alt="Mercado Paquere" style="width:44px;height:44px;border-radius:14px;object-fit:cover;display:block"/>
+    </div>
+    <div><strong>Paquere</strong><span>Açougue &amp; Mini Mercado</span></div>
+  </a>
+  <nav class="nav-links">
+    <a href="#ofertas">Ofertas</a>
+    <a href="#combos">Combos</a>
+    <a href="#catalogo">Carnes</a>
+    <a href="#pedido">Como pedir</a>
+    <a href="#como-chegar">Como chegar</a>
+  </nav>
+  <button class="cart-btn" data-open-cart="" aria-label="Abrir carrinho de pedido" type="button">
+    🛒 Pedido <span class="count-pill" id="cartCount">0</span>
+  </button>
 </div>
 </header>
+
 <main>
 <section class="hero">
-<div class="container hero-grid">
-<div class="hero-copy">
-<div class="badge">Araçatuba/SP • pedido rápido pelo WhatsApp</div>
-<h1>Carnes frescas para hoje, para a semana e para o <em>churrasco</em>.</h1>
-<p>Escolha seus cortes, monte o pedido e envie pelo WhatsApp. A equipe confirma peso, disponibilidade, preço do dia e retirada ou entrega.</p>
-<div class="hero-actions">
-<a class="btn-primary" href="#catalogo">🥩 Ver carnes</a>
-<a class="btn-secondary" href="#combos">🔥 Ver combos</a>
-</div>
-<div class="hero-stats">
-<div class="stat"><strong>22</strong><span>Opções</span></div>
-<div class="stat"><strong>3</strong><span>Combos</span></div>
-<div class="stat"><strong>WhatsApp</strong><span>Pedido pronto</span></div>
-<div class="stat"><strong>Local</strong><span>Retirada/entrega</span></div>
-</div>
-</div>
-<div class="hero-panel">
-<div class="hero-panel-img">
-<div class="floating-card"><strong>Peça sem complicação</strong><span>Monte seu pedido e envie a lista pronta pelo WhatsApp.</span></div>
-</div>
-</div>
-</div>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <div class="badge">Araçatuba/SP • pedido rápido pelo WhatsApp</div>
+      <h1>Carnes frescas para hoje, para a semana e para o <em>churrasco</em>.</h1>
+      <p>Escolha seus cortes, monte o pedido e envie pelo WhatsApp. A equipe confirma peso, disponibilidade, preço do dia e retirada ou entrega.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#catalogo">🥩 Ver carnes</a>
+        <a class="btn-secondary" href="#combos">🔥 Ver combos</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><strong>22</strong><span>Opções</span></div>
+        <div class="stat"><strong>3</strong><span>Combos</span></div>
+        <div class="stat"><strong>WhatsApp</strong><span>Pedido pronto</span></div>
+        <div class="stat"><strong>Local</strong><span>Retirada/entrega</span></div>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="hero-panel-img">
+        <div class="floating-card">
+          <strong>Peça sem complicação</strong>
+          <span>Monte seu pedido e envie a lista pronta pelo WhatsApp.</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
-<div class="strip"><div class="container strip-grid">
-<div class="strip-item">🚚 Entrega local sob consulta</div><div class="strip-item">📲 Pedido pelo WhatsApp</div><div class="strip-item">🥩 Cortes tradicionais</div><div class="strip-item">🏪 Retirada no balcão</div>
-</div></div>
+
+<div class="strip">
+  <div class="container strip-grid">
+    <div class="strip-item">🚚 Entrega local sob consulta</div>
+    <div class="strip-item">📲 Pedido pelo WhatsApp</div>
+    <div class="strip-item">🥩 Cortes tradicionais</div>
+    <div class="strip-item">🏪 Retirada no balcão</div>
+  </div>
+</div>
+
 <section id="ofertas">
-<div class="container">
-<div class="kicker">Ofertas selecionadas</div>
-<h2 class="title">Destaques de hoje</h2>
-<p class="sub">Adicione ao pedido e confirme disponibilidade, peso e preço do dia pelo WhatsApp.</p>
-<div class="oferta-grid">
-<article class="oferta-card featured"><span class="ribbon">Mais pedido</span><div class="card-img img-picanha"></div><div class="oferta-body"><h3>Picanha</h3><p>Corte nobre para churrasco especial.</p><div class="old-price">R$ 79,90/kg</div><div class="product-footer"><div class="product-price">R$ 69,98<small>/kg</small></div><button class="add-btn" data-add="picanha" aria-label="Adicionar Picanha ao pedido" type="button">Adicionar</button></div></div></article>
-<article class="oferta-card"><div class="card-img img-costela_ripa"></div><div class="oferta-body"><h3>Costela ripa</h3><p>Perfeita para preparo lento na brasa.</p><div class="old-price">R$ 36,00/kg</div><div class="product-footer"><div class="product-price">R$ 29,98<small>/kg</small></div><button class="add-btn" data-add="costela-ripa" aria-label="Adicionar Costela ripa ao pedido" type="button">Adicionar</button></div></div></article>
-<article class="oferta-card"><div class="card-img img-ling_calabresa_real"></div><div class="oferta-body"><h3>Linguiça calabresa</h3><p>Clássica para churrasco e receitas.</p><div class="old-price">R$ 34,90/kg</div><div class="product-footer"><div class="product-price">R$ 29,19<small>/kg</small></div><button class="add-btn" data-add="ling-calabresa" aria-label="Adicionar Linguiça calabresa ao pedido" type="button">Adicionar</button></div></div></article>
-</div>
-</div>
+  <div class="container">
+    <div class="kicker">Ofertas selecionadas</div>
+    <h2 class="title">Destaques de hoje</h2>
+    <p class="sub">Adicione ao pedido e confirme disponibilidade, peso e preço do dia pelo WhatsApp.</p>
+    <div class="oferta-grid">
+      <article class="oferta-card featured">
+        <span class="ribbon">Mais pedido</span>
+        <div class="card-img img-picanha"></div>
+        <div class="oferta-body">
+          <h3>Picanha</h3>
+          <p>Corte nobre para churrasco especial.</p>
+          <div class="old-price">R$ 79,90/kg</div>
+          <div class="product-footer">
+            <div class="product-price">R$ 69,98<small>/kg</small></div>
+            <button class="add-btn" data-add="picanha" aria-label="Adicionar Picanha ao pedido" type="button">Adicionar</button>
+          </div>
+        </div>
+      </article>
+      <article class="oferta-card">
+        <div class="card-img img-costela_ripa"></div>
+        <div class="oferta-body">
+          <h3>Costela ripa</h3>
+          <p>Perfeita para preparo lento na brasa.</p>
+          <div class="old-price">R$ 36,00/kg</div>
+          <div class="product-footer">
+            <div class="product-price">R$ 29,98<small>/kg</small></div>
+            <button class="add-btn" data-add="costela-ripa" aria-label="Adicionar Costela ripa ao pedido" type="button">Adicionar</button>
+          </div>
+        </div>
+      </article>
+      <article class="oferta-card">
+        <div class="card-img img-ling_calabresa_real"></div>
+        <div class="oferta-body">
+          <h3>Linguiça calabresa</h3>
+          <p>Clássica para churrasco e receitas.</p>
+          <div class="old-price">R$ 34,90/kg</div>
+          <div class="product-footer">
+            <div class="product-price">R$ 29,19<small>/kg</small></div>
+            <button class="add-btn" data-add="ling-calabresa" aria-label="Adicionar Linguiça calabresa ao pedido" type="button">Adicionar</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
 </section>
+
 <section class="dark" id="combos">
-<div class="container">
-<div class="kicker">Combos prontos</div>
-<h2 class="title">Facilite sua compra</h2>
-<p class="sub">Opções montadas para churrasco, almoço em família e compra da semana.</p>
-<div class="combo-grid">
-<article class="combo-card">
-<div class="combo-img img-bovinos_premium">
-<span class="combo-badge">Mais pedido</span>
-</div>
-<div class="combo-body">
-<h3>Combo Churrasco Família</h3>
-<p>Para reunir a família no fim de semana.</p>
-<ul><li>1kg picanha ou contra filé</li><li>1kg linguiça</li><li>1kg coxinha da asa</li><li>1kg costela ripa</li></ul>
-<div class="product-footer">
-<div class="product-price">R$ 179,90</div>
-<button class="add-btn wide" data-add="combo-churrasco-familia" aria-label="Adicionar Combo Churrasco Família ao pedido" type="button">Adicionar combo</button>
-</div>
-</div>
-</article>
-<article class="combo-card">
-<div class="combo-img img-bovinos_trad">
-<span class="combo-badge">Prático</span>
-</div>
-<div class="combo-body">
-<h3>Combo da Semana</h3>
-<p>Para garantir as misturas da semana.</p>
-<ul><li>1kg acém</li><li>1kg filé de frango</li><li>1kg pernil</li></ul>
-<div class="product-footer">
-<div class="product-price">R$ 89,90</div>
-<button class="add-btn wide" data-add="combo-semana" aria-label="Adicionar Combo da Semana ao pedido" type="button">Adicionar combo</button>
-</div>
-</div>
-</article>
-<article class="combo-card">
-<div class="combo-img img-costelas">
-<span class="combo-badge">Churrasco</span>
-</div>
-<div class="combo-body">
-<h3>Combo Brasa Econômico</h3>
-<p>Para churrasco simples, gostoso e sem complicação.</p>
-<ul><li>1kg fraldinha</li><li>1kg linguiça calabresa</li><li>1kg costela ripa</li></ul>
-<div class="product-footer">
-<div class="product-price">R$ 129,90</div>
-<button class="add-btn wide" data-add="combo-brasa" aria-label="Adicionar Combo Brasa Econômico ao pedido" type="button">Adicionar combo</button>
-</div>
-</div>
-</article>
-</div>
-</div>
+  <div class="container">
+    <div class="kicker">Combos prontos</div>
+    <h2 class="title">Facilite sua compra</h2>
+    <p class="sub">Opções montadas para churrasco, almoço em família e compra da semana.</p>
+    <div class="combo-grid">
+      <article class="combo-card">
+        <div class="combo-img img-bovinos_premium"><span class="combo-badge">Mais pedido</span></div>
+        <div class="combo-body">
+          <h3>Combo Churrasco Família</h3>
+          <p>Para reunir a família no fim de semana.</p>
+          <ul><li>1kg picanha ou contra filé</li><li>1kg linguiça</li><li>1kg coxinha da asa</li><li>1kg costela ripa</li></ul>
+          <div class="product-footer">
+            <div class="product-price">R$ 179,90</div>
+            <button class="add-btn wide" data-add="combo-churrasco-familia" aria-label="Adicionar Combo Churrasco Família ao pedido" type="button">Adicionar combo</button>
+          </div>
+        </div>
+      </article>
+      <article class="combo-card">
+        <div class="combo-img img-bovinos_trad"><span class="combo-badge">Prático</span></div>
+        <div class="combo-body">
+          <h3>Combo da Semana</h3>
+          <p>Para garantir as misturas da semana.</p>
+          <ul><li>1kg acém</li><li>1kg filé de frango</li><li>1kg pernil</li></ul>
+          <div class="product-footer">
+            <div class="product-price">R$ 89,90</div>
+            <button class="add-btn wide" data-add="combo-semana" aria-label="Adicionar Combo da Semana ao pedido" type="button">Adicionar combo</button>
+          </div>
+        </div>
+      </article>
+      <article class="combo-card">
+        <div class="combo-img img-costelas"><span class="combo-badge">Churrasco</span></div>
+        <div class="combo-body">
+          <h3>Combo Brasa Econômico</h3>
+          <p>Para churrasco simples, gostoso e sem complicação.</p>
+          <ul><li>1kg fraldinha</li><li>1kg linguiça calabresa</li><li>1kg costela ripa</li></ul>
+          <div class="product-footer">
+            <div class="product-price">R$ 129,90</div>
+            <button class="add-btn wide" data-add="combo-brasa" aria-label="Adicionar Combo Brasa Econômico ao pedido" type="button">Adicionar combo</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
 </section>
+
 <section id="catalogo">
-<div class="container">
-<div class="kicker">Carnes disponíveis</div>
-<h2 class="title">Escolha seus cortes</h2>
-<p class="sub">Valores por kg sujeitos à confirmação no dia. O peso final é confirmado pela equipe antes da separação.</p>
-<div class="catalog-tools">
-<input autocomplete="off" class="search" id="searchInput" placeholder="Buscar corte, frango, linguiça..."/>
-<div class="filters">
-<button class="filter-btn active" data-filter="Todos">Todos</button>
-<button class="filter-btn" data-filter="Bovinos">Bovinos</button>
-<button class="filter-btn" data-filter="Linguiças">Linguiças</button>
-<button class="filter-btn" data-filter="Aves">Aves</button>
-<button class="filter-btn" data-filter="Suínos">Suínos</button>
-</div>
-</div>
-<div class="products-grid">
-<article class="product-card" data-cat="Bovinos" data-name="miolo da paleta">
-<div class="product-img img-miolo_paleta">
-<span class="photo-label">Miolo da paleta</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Dia a dia</span>
-<h3>Miolo da paleta</h3>
-<p>Bom para panela, bife e receitas caseiras.</p>
-<div class="product-footer">
-<div class="product-price">R$ 34,98<small>/kg</small></div>
-<button aria-label="Adicionar Miolo da paleta" class="add-btn" data-add="miolo-paleta" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Bovinos" data-name="miolo do acém">
-<div class="product-img img-miolo_acem">
-<span class="photo-label">Miolo do acém</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Dia a dia</span>
-<h3>Miolo do acém</h3>
-<p>Sabor marcante para picadinho, bife e cozido.</p>
-<div class="product-footer">
-<div class="product-price">R$ 36,98<small>/kg</small></div>
-<button aria-label="Adicionar Miolo do acém" class="add-btn" data-add="miolo-acem" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Bovinos" data-name="ponta de peito">
-<div class="product-img img-ponta_peito">
-<span class="photo-label">Ponta de peito</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Para assar</span>
-<h3>Ponta de peito</h3>
-<p>Ideal para forno, panela e preparo lento.</p>
-<div class="product-footer">
-<div class="product-price">R$ 36,98<small>/kg</small></div>
-<button aria-label="Adicionar Ponta de peito" class="add-btn" data-add="ponta-peito" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Bovinos" data-name="ponta de peito com osso">
-<div class="product-img img-ponta_peito_osso">
-<span class="photo-label">Ponta de peito com osso</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Com osso</span>
-<h3>Ponta de peito com osso</h3>
-<p>Mais sabor para cozidos e receitas demoradas.</p>
-<div class="product-footer">
-<div class="product-price">R$ 32,98<small>/kg</small></div>
-<button aria-label="Adicionar Ponta de peito com osso" class="add-btn" data-add="ponta-peito-osso" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Bovinos" data-name="acém">
-<div class="product-img img-acem">
-<span class="photo-label">Acém</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Mais pedido</span>
-<h3>Acém</h3>
-<p>Corte versátil para o almoço da família.</p>
-<div class="product-footer">
-<div class="product-price">R$ 38,98<small>/kg</small></div>
-<button aria-label="Adicionar Acém" class="add-btn" data-add="acem" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Bovinos" data-name="costela ripa">
-<div class="product-img img-costela_ripa">
-<span class="photo-label">Costela ripa</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Churrasco</span>
-<h3>Costela ripa</h3>
-<p>Perfeita para brasa, forno ou panela.</p>
-<div class="product-footer">
-<div class="product-price">R$ 29,98<small>/kg</small></div>
-<button aria-label="Adicionar Costela ripa" class="add-btn" data-add="costela-ripa" aria-label="Adicionar Costela ripa ao pedido" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Bovinos" data-name="costelão">
-<div class="product-img img-costelao">
-<span class="photo-label">Costelão</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Churrasco</span>
-<h3>Costelão</h3>
-<p>Corte robusto para assar com calma.</p>
-<div class="product-footer">
-<div class="product-price">R$ 31,98<small>/kg</small></div>
-<button aria-label="Adicionar Costelão" class="add-btn" data-add="costelao" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Bovinos" data-name="picanha">
-<div class="product-img img-picanha">
-<span class="photo-label">Picanha</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Corte nobre</span>
-<h3>Picanha</h3>
-<p>Para churrasco especial e fim de semana.</p>
-<div class="product-footer">
-<div class="product-price">R$ 69,98<small>/kg</small></div>
-<button aria-label="Adicionar Picanha" class="add-btn" data-add="picanha" aria-label="Adicionar Picanha ao pedido" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Bovinos" data-name="contra filé">
-<div class="product-img img-contra_file">
-<span class="photo-label">Contra filé</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Clássico</span>
-<h3>Contra filé</h3>
-<p>Ótimo para bife, grelha e churrasco.</p>
-<div class="product-footer">
-<div class="product-price">R$ 49,98<small>/kg</small></div>
-<button aria-label="Adicionar Contra filé" class="add-btn" data-add="contra-file" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Bovinos" data-name="fraldinha">
-<div class="product-img img-fraldinha">
-<span class="photo-label">Fraldinha</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Churrasco</span>
-<h3>Fraldinha</h3>
-<p>Macia, saborosa e ótima na grelha.</p>
-<div class="product-footer">
-<div class="product-price">R$ 44,98<small>/kg</small></div>
-<button aria-label="Adicionar Fraldinha" class="add-btn" data-add="fraldinha" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Bovinos" data-name="fraldão">
-<div class="product-img img-fraldinha">
-<span class="photo-label">Fraldão</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Seleção</span>
-<h3>Fraldão</h3>
-<p>Boa opção para assar ou grelhar.</p>
-<div class="product-footer">
-<div class="product-price">R$ 39,98<small>/kg</small></div>
-<button aria-label="Adicionar Fraldão" class="add-btn" data-add="fraldao" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Bovinos" data-name="bisteca bovina">
-<div class="product-img img-bovinos_osso" style="background-position:76% 42%;">
-<span class="photo-label">Bisteca bovina</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Suculenta</span>
-<h3>Bisteca bovina</h3>
-<p>Corte encorpado para grelha ou panela.</p>
-<div class="product-footer">
-<div class="product-price">R$ 42,98<small>/kg</small></div>
-<button aria-label="Adicionar Bisteca bovina" class="add-btn" data-add="bisteca-bovina" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Bovinos" data-name="osso buco">
-<div class="product-img img-osso_buco_real">
-<span class="photo-label">Osso buco</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Cozidos</span>
-<h3>Osso buco</h3>
-<p>Perfeito para molhos e pratos de panela.</p>
-<div class="product-footer">
-<div class="product-price">R$ 29,98<small>/kg</small></div>
-<button aria-label="Adicionar Osso buco" class="add-btn" data-add="osso-buco" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Linguiças" data-name="linguiça calabresa">
-<div class="product-img img-ling_calabresa_real">
-<span class="photo-label">Linguiça calabresa</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Churrasco</span>
-<h3>Linguiça calabresa</h3>
-<p>Clássica para brasa, porções e receitas.</p>
-<div class="product-footer">
-<div class="product-price">R$ 29,19<small>/kg</small></div>
-<button aria-label="Adicionar Linguiça calabresa" class="add-btn" data-add="ling-calabresa" aria-label="Adicionar Linguiça calabresa ao pedido" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Linguiças" data-name="linguiça aurora">
-<div class="product-img img-ling_aurora_real">
-<span class="photo-label">Linguiça Aurora</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Marca</span>
-<h3>Linguiça Aurora</h3>
-<p>Boa para assar, grelhar ou fritar.</p>
-<div class="product-footer">
-<div class="product-price">R$ 33,09<small>/kg</small></div>
-<button aria-label="Adicionar Linguiça Aurora" class="add-btn" data-add="ling-aurora" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Linguiças" data-name="linguiça perdigão">
-<div class="product-img img-ling_perdigao_real">
-<span class="photo-label">Linguiça Perdigão</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Marca</span>
-<h3>Linguiça Perdigão</h3>
-<p>Opção prática para churrasco e almoço.</p>
-<div class="product-footer">
-<div class="product-price">R$ 38,23<small>/kg</small></div>
-<button aria-label="Adicionar Linguiça Perdigão" class="add-btn" data-add="ling-perdigao" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Linguiças" data-name="linguiça sadia">
-<div class="product-img img-ling_sadia_real">
-<span class="photo-label">Linguiça Sadia</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Marca</span>
-<h3>Linguiça Sadia</h3>
-<p>Muito pedida para churrasco e acompanhamentos.</p>
-<div class="product-footer">
-<div class="product-price">R$ 32,89<small>/kg</small></div>
-<button aria-label="Adicionar Linguiça Sadia" class="add-btn" data-add="ling-sadia" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Aves" data-name="coxinha da asa">
-<div class="product-img img-coxinha_asa_real">
-<span class="photo-label">Coxinha da asa</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Aves</span>
-<h3>Coxinha da asa</h3>
-<p>Boa para fritar, assar e servir como petisco.</p>
-<div class="product-footer">
-<div class="product-price">R$ 18,98<small>/kg</small></div>
-<button aria-label="Adicionar Coxinha da asa" class="add-btn" data-add="coxinha-asa" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Aves" data-name="filé de frango">
-<div class="product-img img-file_frango_real">
-<span class="photo-label">Filé de frango</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Aves</span>
-<h3>Filé de frango</h3>
-<p>Leve e prático para o dia a dia.</p>
-<div class="product-footer">
-<div class="product-price">R$ 26,98<small>/kg</small></div>
-<button aria-label="Adicionar Filé de frango" class="add-btn" data-add="file-frango" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Suínos" data-name="bisteca de porco">
-<div class="product-img img-bisteca_porco_real">
-<span class="photo-label">Bisteca de porco</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Suínos</span>
-<h3>Bisteca de porco</h3>
-<p>Suculenta para grelha, forno ou frigideira.</p>
-<div class="product-footer">
-<div class="product-price">R$ 22,98<small>/kg</small></div>
-<button aria-label="Adicionar Bisteca de porco" class="add-btn" data-add="bisteca-porco" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Suínos" data-name="lombo suíno">
-<div class="product-img img-lombo_suino_real">
-<span class="photo-label">Lombo suíno</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Suínos</span>
-<h3>Lombo suíno</h3>
-<p>Corte macio para assados e medalhões.</p>
-<div class="product-footer">
-<div class="product-price">R$ 24,98<small>/kg</small></div>
-<button aria-label="Adicionar Lombo suíno" class="add-btn" data-add="lombo-suino" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-<article class="product-card" data-cat="Suínos" data-name="pernil">
-<div class="product-img img-pernil_real">
-<span class="photo-label">Pernil</span>
-</div>
-<div class="product-body">
-<span class="product-tag">Suínos</span>
-<h3>Pernil</h3>
-<p>Tradicional, econômico e muito saboroso.</p>
-<div class="product-footer">
-<div class="product-price">R$ 14,98<small>/kg</small></div>
-<button aria-label="Adicionar Pernil" class="add-btn" data-add="pernil" type="button">Adicionar</button>
-</div>
-</div>
-</article>
-</div>
-</div>
+  <div class="container">
+    <div class="kicker">Carnes disponíveis</div>
+    <h2 class="title">Escolha seus cortes</h2>
+    <p class="sub">Valores por kg sujeitos à confirmação no dia. O peso final é confirmado pela equipe antes da separação.</p>
+    <div class="catalog-tools">
+      <input autocomplete="off" class="search" id="searchInput" placeholder="Buscar corte, frango, linguiça..." aria-label="Buscar produtos"/>
+      <div class="filters" role="group" aria-label="Filtrar por categoria">
+        <button class="filter-btn active" data-filter="Todos">Todos</button>
+        <button class="filter-btn" data-filter="Bovinos">Bovinos</button>
+        <button class="filter-btn" data-filter="Linguiças">Linguiças</button>
+        <button class="filter-btn" data-filter="Aves">Aves</button>
+        <button class="filter-btn" data-filter="Suínos">Suínos</button>
+      </div>
+    </div>
+    <div class="products-grid" id="productsGrid">
+      <article class="product-card" data-cat="Bovinos" data-name="miolo da paleta">
+        <div class="product-img img-miolo_paleta"><span class="photo-label">Miolo da paleta</span></div>
+        <div class="product-body"><span class="product-tag">Dia a dia</span><h3>Miolo da paleta</h3><p>Bom para panela, bife e receitas caseiras.</p><div class="product-footer"><div class="product-price">R$ 34,98<small>/kg</small></div><button aria-label="Adicionar Miolo da paleta ao pedido" class="add-btn" data-add="miolo-paleta" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Bovinos" data-name="miolo do acém">
+        <div class="product-img img-miolo_acem"><span class="photo-label">Miolo do acém</span></div>
+        <div class="product-body"><span class="product-tag">Dia a dia</span><h3>Miolo do acém</h3><p>Sabor marcante para picadinho, bife e cozido.</p><div class="product-footer"><div class="product-price">R$ 36,98<small>/kg</small></div><button aria-label="Adicionar Miolo do acém ao pedido" class="add-btn" data-add="miolo-acem" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Bovinos" data-name="ponta de peito">
+        <div class="product-img img-ponta_peito"><span class="photo-label">Ponta de peito</span></div>
+        <div class="product-body"><span class="product-tag">Para assar</span><h3>Ponta de peito</h3><p>Ideal para forno, panela e preparo lento.</p><div class="product-footer"><div class="product-price">R$ 36,98<small>/kg</small></div><button aria-label="Adicionar Ponta de peito ao pedido" class="add-btn" data-add="ponta-peito" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Bovinos" data-name="ponta de peito com osso">
+        <div class="product-img img-ponta_peito_osso"><span class="photo-label">Ponta de peito com osso</span></div>
+        <div class="product-body"><span class="product-tag">Com osso</span><h3>Ponta de peito com osso</h3><p>Mais sabor para cozidos e receitas demoradas.</p><div class="product-footer"><div class="product-price">R$ 32,98<small>/kg</small></div><button aria-label="Adicionar Ponta de peito com osso ao pedido" class="add-btn" data-add="ponta-peito-osso" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Bovinos" data-name="acém">
+        <div class="product-img img-acem"><span class="photo-label">Acém</span></div>
+        <div class="product-body"><span class="product-tag">Mais pedido</span><h3>Acém</h3><p>Corte versátil para o almoço da família.</p><div class="product-footer"><div class="product-price">R$ 38,98<small>/kg</small></div><button aria-label="Adicionar Acém ao pedido" class="add-btn" data-add="acem" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Bovinos" data-name="costela ripa">
+        <div class="product-img img-costela_ripa"><span class="photo-label">Costela ripa</span></div>
+        <div class="product-body"><span class="product-tag">Churrasco</span><h3>Costela ripa</h3><p>Perfeita para brasa, forno ou panela.</p><div class="product-footer"><div class="product-price">R$ 29,98<small>/kg</small></div><button aria-label="Adicionar Costela ripa ao pedido" class="add-btn" data-add="costela-ripa" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Bovinos" data-name="costelão">
+        <div class="product-img img-costelao"><span class="photo-label">Costelão</span></div>
+        <div class="product-body"><span class="product-tag">Churrasco</span><h3>Costelão</h3><p>Corte robusto para assar com calma.</p><div class="product-footer"><div class="product-price">R$ 31,98<small>/kg</small></div><button aria-label="Adicionar Costelão ao pedido" class="add-btn" data-add="costelao" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Bovinos" data-name="picanha">
+        <div class="product-img img-picanha"><span class="photo-label">Picanha</span></div>
+        <div class="product-body"><span class="product-tag">Corte nobre</span><h3>Picanha</h3><p>Para churrasco especial e fim de semana.</p><div class="product-footer"><div class="product-price">R$ 69,98<small>/kg</small></div><button aria-label="Adicionar Picanha ao pedido" class="add-btn" data-add="picanha" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Bovinos" data-name="contra filé">
+        <div class="product-img img-contra_file"><span class="photo-label">Contra filé</span></div>
+        <div class="product-body"><span class="product-tag">Clássico</span><h3>Contra filé</h3><p>Ótimo para bife, grelha e churrasco.</p><div class="product-footer"><div class="product-price">R$ 49,98<small>/kg</small></div><button aria-label="Adicionar Contra filé ao pedido" class="add-btn" data-add="contra-file" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Bovinos" data-name="fraldinha">
+        <div class="product-img img-fraldinha"><span class="photo-label">Fraldinha</span></div>
+        <div class="product-body"><span class="product-tag">Churrasco</span><h3>Fraldinha</h3><p>Macia, saborosa e ótima na grelha.</p><div class="product-footer"><div class="product-price">R$ 44,98<small>/kg</small></div><button aria-label="Adicionar Fraldinha ao pedido" class="add-btn" data-add="fraldinha" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Bovinos" data-name="fraldão">
+        <div class="product-img img-fraldinha"><span class="photo-label">Fraldão</span></div>
+        <div class="product-body"><span class="product-tag">Seleção</span><h3>Fraldão</h3><p>Boa opção para assar ou grelhar.</p><div class="product-footer"><div class="product-price">R$ 39,98<small>/kg</small></div><button aria-label="Adicionar Fraldão ao pedido" class="add-btn" data-add="fraldao" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Bovinos" data-name="bisteca bovina">
+        <div class="product-img img-bovinos_osso" style="background-position:76% 42%;"><span class="photo-label">Bisteca bovina</span></div>
+        <div class="product-body"><span class="product-tag">Suculenta</span><h3>Bisteca bovina</h3><p>Corte encorpado para grelha ou panela.</p><div class="product-footer"><div class="product-price">R$ 42,98<small>/kg</small></div><button aria-label="Adicionar Bisteca bovina ao pedido" class="add-btn" data-add="bisteca-bovina" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Bovinos" data-name="osso buco">
+        <div class="product-img img-osso_buco_real"><span class="photo-label">Osso buco</span></div>
+        <div class="product-body"><span class="product-tag">Cozidos</span><h3>Osso buco</h3><p>Perfeito para molhos e pratos de panela.</p><div class="product-footer"><div class="product-price">R$ 29,98<small>/kg</small></div><button aria-label="Adicionar Osso buco ao pedido" class="add-btn" data-add="osso-buco" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Linguiças" data-name="linguiça calabresa">
+        <div class="product-img img-ling_calabresa_real"><span class="photo-label">Linguiça calabresa</span></div>
+        <div class="product-body"><span class="product-tag">Churrasco</span><h3>Linguiça calabresa</h3><p>Clássica para brasa, porções e receitas.</p><div class="product-footer"><div class="product-price">R$ 29,19<small>/kg</small></div><button aria-label="Adicionar Linguiça calabresa ao pedido" class="add-btn" data-add="ling-calabresa" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Linguiças" data-name="linguiça aurora">
+        <div class="product-img img-ling_aurora_real"><span class="photo-label">Linguiça Aurora</span></div>
+        <div class="product-body"><span class="product-tag">Marca</span><h3>Linguiça Aurora</h3><p>Boa para assar, grelhar ou fritar.</p><div class="product-footer"><div class="product-price">R$ 33,09<small>/kg</small></div><button aria-label="Adicionar Linguiça Aurora ao pedido" class="add-btn" data-add="ling-aurora" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Linguiças" data-name="linguiça perdigão">
+        <div class="product-img img-ling_perdigao_real"><span class="photo-label">Linguiça Perdigão</span></div>
+        <div class="product-body"><span class="product-tag">Marca</span><h3>Linguiça Perdigão</h3><p>Opção prática para churrasco e almoço.</p><div class="product-footer"><div class="product-price">R$ 38,23<small>/kg</small></div><button aria-label="Adicionar Linguiça Perdigão ao pedido" class="add-btn" data-add="ling-perdigao" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Linguiças" data-name="linguiça sadia">
+        <div class="product-img img-ling_sadia_real"><span class="photo-label">Linguiça Sadia</span></div>
+        <div class="product-body"><span class="product-tag">Marca</span><h3>Linguiça Sadia</h3><p>Muito pedida para churrasco e acompanhamentos.</p><div class="product-footer"><div class="product-price">R$ 32,89<small>/kg</small></div><button aria-label="Adicionar Linguiça Sadia ao pedido" class="add-btn" data-add="ling-sadia" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Aves" data-name="coxinha da asa">
+        <div class="product-img img-coxinha_asa_real"><span class="photo-label">Coxinha da asa</span></div>
+        <div class="product-body"><span class="product-tag">Aves</span><h3>Coxinha da asa</h3><p>Boa para fritar, assar e servir como petisco.</p><div class="product-footer"><div class="product-price">R$ 18,98<small>/kg</small></div><button aria-label="Adicionar Coxinha da asa ao pedido" class="add-btn" data-add="coxinha-asa" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Aves" data-name="filé de frango">
+        <div class="product-img img-file_frango_real"><span class="photo-label">Filé de frango</span></div>
+        <div class="product-body"><span class="product-tag">Aves</span><h3>Filé de frango</h3><p>Leve e prático para o dia a dia.</p><div class="product-footer"><div class="product-price">R$ 26,98<small>/kg</small></div><button aria-label="Adicionar Filé de frango ao pedido" class="add-btn" data-add="file-frango" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Suínos" data-name="bisteca de porco">
+        <div class="product-img img-bisteca_porco_real"><span class="photo-label">Bisteca de porco</span></div>
+        <div class="product-body"><span class="product-tag">Suínos</span><h3>Bisteca de porco</h3><p>Suculenta para grelha, forno ou frigideira.</p><div class="product-footer"><div class="product-price">R$ 22,98<small>/kg</small></div><button aria-label="Adicionar Bisteca de porco ao pedido" class="add-btn" data-add="bisteca-porco" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Suínos" data-name="lombo suíno">
+        <div class="product-img img-lombo_suino_real"><span class="photo-label">Lombo suíno</span></div>
+        <div class="product-body"><span class="product-tag">Suínos</span><h3>Lombo suíno</h3><p>Corte macio para assados e medalhões.</p><div class="product-footer"><div class="product-price">R$ 24,98<small>/kg</small></div><button aria-label="Adicionar Lombo suíno ao pedido" class="add-btn" data-add="lombo-suino" type="button">Adicionar</button></div></div>
+      </article>
+      <article class="product-card" data-cat="Suínos" data-name="pernil">
+        <div class="product-img img-pernil_real"><span class="photo-label">Pernil</span></div>
+        <div class="product-body"><span class="product-tag">Suínos</span><h3>Pernil</h3><p>Tradicional, econômico e muito saboroso.</p><div class="product-footer"><div class="product-price">R$ 14,98<small>/kg</small></div><button aria-label="Adicionar Pernil ao pedido" class="add-btn" data-add="pernil" type="button">Adicionar</button></div></div>
+      </article>
+    </div>
+  </div>
 </section>
+
 <section class="dark" id="pedido">
-<div class="container">
-<div class="kicker">Pedido simples</div>
-<h2 class="title">Como pedir</h2>
-<div class="steps-grid">
-<article class="step-card"><div class="step-num">1</div><h3>Escolha</h3><p>Veja ofertas, combos ou cortes do catálogo.</p></article>
-<article class="step-card"><div class="step-num">2</div><h3>Adicione</h3><p>Monte seu pedido com quantidade aproximada.</p></article>
-<article class="step-card"><div class="step-num">3</div><h3>Envie</h3><p>A lista vai pronta para o WhatsApp.</p></article>
-<article class="step-card"><div class="step-num">4</div><h3>Combine</h3><p>A equipe confirma peso, valor e entrega.</p></article>
-</div>
-</div>
+  <div class="container">
+    <div class="kicker">Pedido simples</div>
+    <h2 class="title">Como pedir</h2>
+    <div class="steps-grid">
+      <article class="step-card"><div class="step-num">1</div><h3>Escolha</h3><p>Veja ofertas, combos ou cortes do catálogo.</p></article>
+      <article class="step-card"><div class="step-num">2</div><h3>Adicione</h3><p>Monte seu pedido com quantidade aproximada.</p></article>
+      <article class="step-card"><div class="step-num">3</div><h3>Envie</h3><p>A lista vai pronta para o WhatsApp.</p></article>
+      <article class="step-card"><div class="step-num">4</div><h3>Combine</h3><p>A equipe confirma peso, valor e entrega.</p></article>
+    </div>
+  </div>
 </section>
+
 <section>
-<div class="container info-grid">
-<article class="info-card"><h3>Retirada ou entrega</h3><p>Retire no balcão ou consulte entrega para bairros próximos.</p><ul><li>Taxa de entrega sob consulta</li><li>Pagamento por Pix, cartão ou dinheiro</li><li>Preço final confirmado após pesagem</li></ul></article>
-<article class="info-card"><h3>Mercado Paquere</h3><p>📍 Cabo PM Marcos Volnei Guerra, 13 — Araçatuba/SP</p><p>📲 (18) 98130-9332</p><p>📸 @mercadopaquere</p></article>
-<article class="info-card"><h3>Observações</h3><p>Peça no campo de observações: bife fino, peça mais magra, separado por embalagem ou corte para churrasco.</p></article>
-<article class="info-card"><h3>Confirmação</h3><p>Antes de separar, a equipe confirma disponibilidade, peso aproximado, valor e prazo pelo WhatsApp.</p></article>
-</div>
+  <div class="container info-grid">
+    <article class="info-card"><h3>Retirada ou entrega</h3><p>Retire no balcão ou consulte entrega para bairros próximos.</p><ul><li>Taxa de entrega sob consulta</li><li>Pagamento por Pix, cartão ou dinheiro</li><li>Preço final confirmado após pesagem</li></ul></article>
+    <article class="info-card"><h3>Mercado Paquere</h3><p>📍 Cabo PM Marcos Volnei Guerra, 13 — Araçatuba/SP</p><p>📲 (18) 98130-9332</p><p>📸 @mercadopaquere</p></article>
+    <article class="info-card"><h3>Observações</h3><p>Peça no campo de observações: bife fino, peça mais magra, separado por embalagem ou corte para churrasco.</p></article>
+    <article class="info-card"><h3>Confirmação</h3><p>Antes de separar, a equipe confirma disponibilidade, peso aproximado, valor e prazo pelo WhatsApp.</p></article>
+  </div>
 </section>
 </main>
 
+<!-- SEÇÃO MAPA — aponta para Araçatuba/SP (sem rota, cliente informa seus dados) -->
 <section class="map-section" id="como-chegar">
   <div class="container">
     <div class="map-header">
@@ -960,7 +556,7 @@ button, [data-add], [data-qty], [data-open-cart], [data-close-cart], [data-filte
           <div class="mic-icon">📍</div>
           <div>
             <strong>Endereço</strong>
-            <span>Araçatuba, SP<br>Consulte pelo WhatsApp</span>
+            <span>Cabo PM Marcos Volnei Guerra, 13<br>Araçatuba — SP</span>
           </div>
         </div>
         <div class="map-info-card">
@@ -984,68 +580,121 @@ button, [data-add], [data-qty], [data-open-cart], [data-close-cart], [data-filte
             <span>Fácil acesso<br>Rua ampla</span>
           </div>
         </div>
-        <a class="map-wpp-btn" href="https://wa.me/5518981309332?text=Olá!%20Gostaria%20de%20saber%20o%20endereço%20do%20Mercado%20Paquere." target="_blank">
-          📲 Pedir endereço pelo WhatsApp
+        <!-- CORREÇÃO: rel="noopener noreferrer" em todos os links externos -->
+        <a class="map-wpp-btn" href="https://wa.me/5518981309332?text=Olá!%20Gostaria%20de%20saber%20o%20endereço%20do%20Mercado%20Paquere." target="_blank" rel="noopener noreferrer">
+          📲 Pedir localização pelo WhatsApp
         </a>
-        <a class="map-gmaps-btn" href="https://www.google.com/maps/search/Mercado+Paquere+Araçatuba+SP" target="_blank">
+        <a class="map-gmaps-btn" href="https://www.google.com/maps/search/Cabo+PM+Marcos+Volnei+Guerra+13+Araçatuba+SP" target="_blank" rel="noopener noreferrer">
           🗺️ Abrir no Google Maps
         </a>
       </div>
+      <!-- CORREÇÃO: mapa apontado para Araçatuba/SP, sem cálculo de rota -->
       <div class="map-embed-wrap">
         <iframe
-          src="https://www.openstreetmap.org/export/embed.html?bbox=-50.4800%2C-21.2200%2C-50.4200%2C-21.1700&layer=mapnik&marker=-21.1950%2C-50.4500"
-          title="Mapa Araçatuba SP"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-50.4600%2C-21.2300%2C-50.4100%2C-21.1800&layer=mapnik&marker=-21.2089%2C-50.4388"
+          title="Localização do Mercado Paquere — Araçatuba SP"
           loading="lazy"
+          sandbox="allow-scripts allow-same-origin"
           allowfullscreen
           class="map-iframe"
         ></iframe>
-        <div class="map-badge">📍 Araçatuba, SP</div>
+        <div class="map-badge">📍 Mercado Paquere — Araçatuba, SP</div>
       </div>
     </div>
   </div>
 </section>
 
-<footer class="footer"><div class="container footer-grid">
-<div><h3>Mercado Paquere</h3><p>Açougue &amp; Mini Mercado em Araçatuba/SP. Escolha seus produtos e peça pelo WhatsApp.</p></div>
-<div><strong>Categorias</strong><a href="#catalogo">Bovinos</a><a href="#catalogo">Linguiças</a><a href="#catalogo">Aves</a><a href="#catalogo">Suínos</a></div>
-<div><strong>Contato</strong><p>Cabo PM Marcos Volnei Guerra, 13</p><p>(18) 98130-9332</p></div>
-</div></footer>
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <h3>Mercado Paquere</h3>
+      <p>Açougue &amp; Mini Mercado em Araçatuba/SP. Escolha seus produtos e peça pelo WhatsApp.</p>
+    </div>
+    <div>
+      <strong>Categorias</strong>
+      <a href="#catalogo">Bovinos</a>
+      <a href="#catalogo">Linguiças</a>
+      <a href="#catalogo">Aves</a>
+      <a href="#catalogo">Suínos</a>
+    </div>
+    <div>
+      <strong>Contato</strong>
+      <p>Cabo PM Marcos Volnei Guerra, 13</p>
+      <p>(18) 98130-9332</p>
+    </div>
+  </div>
+</footer>
+
 <div class="cart-overlay" id="cartOverlay"></div>
+
 <aside class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Carrinho de pedido">
   <div class="cart-head">
     <div>
       <span class="cart-kicker">Carrinho do cliente</span>
       <h2>Meu pedido</h2>
-      <p class="cart-head-sub">Confira os itens, preencha os dados e envie pelo WhatsApp.</p>
+      <p class="cart-head-sub">Preencha os campos obrigatórios e envie pelo WhatsApp.</p>
     </div>
-    <button class="close" data-close-cart="" onclick="closeCart(); return false;" type="button" aria-label="Fechar carrinho">✕</button>
+    <!-- CORREÇÃO: removido onclick inline — binding feito exclusivamente via JS -->
+    <button class="close" data-close-cart="" type="button" aria-label="Fechar carrinho">✕</button>
   </div>
 
   <div class="cart-scroll">
     <div class="cart-summary">
-      <div>
-        <span>Itens</span>
-        <strong id="drawerItemCount">0</strong>
-      </div>
-      <div>
-        <span>Status</span>
-        <strong id="drawerStatus">Aguardando</strong>
-      </div>
+      <div><span>Itens</span><strong id="drawerItemCount">0</strong></div>
+      <div><span>Status</span><strong id="drawerStatus">Aguardando</strong></div>
     </div>
 
     <div class="cart-list" id="cartList"></div>
 
     <div class="checkout-title">
       <strong>Dados para finalizar</strong>
-      <span>Essas informações entram na mensagem do WhatsApp.</span>
+      <span><span style="color:var(--red)">*</span> campos obrigatórios</span>
     </div>
 
     <div class="checkout">
-      <div class="field"><label for="customerName">Nome</label><input id="customerName" placeholder="Seu nome"/></div>
-      <div class="field"><label for="payment">Pagamento</label><select id="payment"><option>Pix</option><option>Cartão</option><option>Dinheiro</option></select></div>
-      <div class="field"><label for="orderType">Tipo de pedido</label><select id="orderType"><option value="Retirada no balcão">Retirada no balcão</option><option value="Entrega">Entrega</option></select></div>
-      <div class="field"><label for="address">Endereço ou retirada</label><input id="address" placeholder="Endereço, bairro ou horário para retirar"/></div>
-      <div class="field full"><label for="notes">Observações</label><textarea id="notes" placeholder="Ex.: cortar em bifes, pouca gordura, separar embalagens..."></textarea></div>
+      <!-- CAMPO: Nome — obrigatório -->
+      <div class="field full">
+        <label for="customerName">Nome <span class="req">*</span></label>
+        <input id="customerName" placeholder="Seu nome completo" autocomplete="name"/>
+        <span class="field-msg" id="msg-name">Informe seu nome para continuar.</span>
+      </div>
+
+      <!-- CAMPO: Tipo de pedido — obrigatório -->
+      <div class="field">
+        <label for="orderType">Tipo de pedido <span class="req">*</span></label>
+        <select id="orderType">
+          <option value="">— Selecione —</option>
+          <option value="Retirada no balcão">Retirada no balcão</option>
+          <option value="Entrega">Entrega</option>
+        </select>
+        <span class="field-msg" id="msg-orderType">Selecione retirada ou entrega.</span>
+      </div>
+
+      <!-- CAMPO: Forma de pagamento — obrigatório -->
+      <div class="field">
+        <label for="payment">Pagamento <span class="req">*</span></label>
+        <select id="payment">
+          <option value="">— Selecione —</option>
+          <option value="Pix">Pix</option>
+          <option value="Cartão">Cartão</option>
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="A combinar">A combinar</option>
+        </select>
+        <span class="field-msg" id="msg-payment">Selecione a forma de pagamento.</span>
+      </div>
+
+      <!-- CAMPO: Endereço — obrigatório apenas se Entrega -->
+      <div class="field full" id="addressField" style="display:none">
+        <label for="address">Endereço de entrega <span class="req">*</span></label>
+        <input id="address" placeholder="Rua, número, bairro, referência"/>
+        <span class="field-msg" id="msg-address">Informe o endereço de entrega.</span>
+      </div>
+
+      <!-- CAMPO: Observações — opcional -->
+      <div class="field full">
+        <label for="notes">Observações <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">(opcional)</span></label>
+        <textarea id="notes" placeholder="Ex.: cortar em bifes, pouca gordura, separar embalagens, horário para retirada..."></textarea>
+      </div>
     </div>
   </div>
 
@@ -1056,93 +705,92 @@ button, [data-add], [data-qty], [data-open-cart], [data-close-cart], [data-filte
     </div>
     <div class="cart-actions">
       <button class="clear-order" id="clearCartBtn" type="button">Limpar pedido</button>
-      <button class="whats" id="sendBtn" type="button">Enviar pedido no WhatsApp</button>
+      <button class="whats" id="sendBtn" type="button">Enviar pelo WhatsApp</button>
     </div>
     <p class="note">Valor final sujeito à pesagem, disponibilidade e preço do dia.</p>
   </div>
 </aside>
-<div class="sticky-mobile"><button data-open-cart="" aria-label="Abrir carrinho de pedido" type="button">🛒 Pedido <span id="mobileCount">0</span></button><a href="https://wa.me/5518981309332" target="_blank">📲 WhatsApp</a></div>
-<div class="toast" id="toast">Produto adicionado ao pedido</div>
+
+<div class="sticky-mobile">
+  <button data-open-cart="" aria-label="Abrir carrinho de pedido" type="button">🛒 Pedido <span id="mobileCount">0</span></button>
+  <a href="https://wa.me/5518981309332" target="_blank" rel="noopener noreferrer">📲 WhatsApp</a>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">Produto adicionado ao pedido</div>
+
 <script>
-const ITEMS = [{"id": "miolo-paleta", "cat": "Bovinos", "name": "Miolo da paleta", "tag": "Dia a dia", "desc": "Bom para panela, bife e receitas caseiras.", "price": 34.98, "img": "miolo_paleta", "pos": "center center", "unit": "kg"}, {"id": "miolo-acem", "cat": "Bovinos", "name": "Miolo do acém", "tag": "Dia a dia", "desc": "Sabor marcante para picadinho, bife e cozido.", "price": 36.98, "img": "miolo_acem", "pos": "center center", "unit": "kg"}, {"id": "ponta-peito", "cat": "Bovinos", "name": "Ponta de peito", "tag": "Para assar", "desc": "Ideal para forno, panela e preparo lento.", "price": 36.98, "img": "ponta_peito", "pos": "center center", "unit": "kg"}, {"id": "ponta-peito-osso", "cat": "Bovinos", "name": "Ponta de peito com osso", "tag": "Com osso", "desc": "Mais sabor para cozidos e receitas demoradas.", "price": 32.98, "img": "ponta_peito_osso", "pos": "center center", "unit": "kg"}, {"id": "acem", "cat": "Bovinos", "name": "Acém", "tag": "Mais pedido", "desc": "Corte versátil para o almoço da família.", "price": 38.98, "img": "acem", "pos": "center center", "unit": "kg"}, {"id": "costela-ripa", "cat": "Bovinos", "name": "Costela ripa", "tag": "Churrasco", "desc": "Perfeita para brasa, forno ou panela.", "price": 29.98, "img": "costela_ripa", "pos": "center center", "unit": "kg"}, {"id": "costelao", "cat": "Bovinos", "name": "Costelão", "tag": "Churrasco", "desc": "Corte robusto para assar com calma.", "price": 31.98, "img": "costelao", "pos": "center center", "unit": "kg"}, {"id": "picanha", "cat": "Bovinos", "name": "Picanha", "tag": "Corte nobre", "desc": "Para churrasco especial e fim de semana.", "price": 69.98, "img": "picanha", "pos": "center center", "unit": "kg"}, {"id": "contra-file", "cat": "Bovinos", "name": "Contra filé", "tag": "Clássico", "desc": "Ótimo para bife, grelha e churrasco.", "price": 49.98, "img": "contra_file", "pos": "center center", "unit": "kg"}, {"id": "fraldinha", "cat": "Bovinos", "name": "Fraldinha", "tag": "Churrasco", "desc": "Macia, saborosa e ótima na grelha.", "price": 44.98, "img": "fraldinha", "pos": "center center", "unit": "kg"}, {"id": "fraldao", "cat": "Bovinos", "name": "Fraldão", "tag": "Seleção", "desc": "Boa opção para assar ou grelhar.", "price": 39.98, "img": "fraldinha", "pos": "center center", "unit": "kg"}, {"id": "bisteca-bovina", "cat": "Bovinos", "name": "Bisteca bovina", "tag": "Suculenta", "desc": "Corte encorpado para grelha ou panela.", "price": 42.98, "img": "bovinos_osso", "pos": "76% 42%", "unit": "kg"}, {"id": "osso-buco", "cat": "Bovinos", "name": "Osso buco", "tag": "Cozidos", "desc": "Perfeito para molhos e pratos de panela.", "price": 29.98, "img": "osso_buco_real", "pos": "center center", "unit": "kg"}, {"id": "ling-calabresa", "cat": "Linguiças", "name": "Linguiça calabresa", "tag": "Churrasco", "desc": "Clássica para brasa, porções e receitas.", "price": 29.19, "img": "ling_calabresa_real", "pos": "center center", "unit": "kg"}, {"id": "ling-aurora", "cat": "Linguiças", "name": "Linguiça Aurora", "tag": "Marca", "desc": "Boa para assar, grelhar ou fritar.", "price": 33.09, "img": "ling_aurora_real", "pos": "center center", "unit": "kg"}, {"id": "ling-perdigao", "cat": "Linguiças", "name": "Linguiça Perdigão", "tag": "Marca", "desc": "Opção prática para churrasco e almoço.", "price": 38.23, "img": "ling_perdigao_real", "pos": "center center", "unit": "kg"}, {"id": "ling-sadia", "cat": "Linguiças", "name": "Linguiça Sadia", "tag": "Marca", "desc": "Muito pedida para churrasco e acompanhamentos.", "price": 32.89, "img": "ling_sadia_real", "pos": "center center", "unit": "kg"}, {"id": "coxinha-asa", "cat": "Aves", "name": "Coxinha da asa", "tag": "Aves", "desc": "Boa para fritar, assar e servir como petisco.", "price": 18.98, "img": "coxinha_asa_real", "pos": "center center", "unit": "kg"}, {"id": "file-frango", "cat": "Aves", "name": "Filé de frango", "tag": "Aves", "desc": "Leve e prático para o dia a dia.", "price": 26.98, "img": "file_frango_real", "pos": "center center", "unit": "kg"}, {"id": "bisteca-porco", "cat": "Suínos", "name": "Bisteca de porco", "tag": "Suínos", "desc": "Suculenta para grelha, forno ou frigideira.", "price": 22.98, "img": "bisteca_porco_real", "pos": "center center", "unit": "kg"}, {"id": "lombo-suino", "cat": "Suínos", "name": "Lombo suíno", "tag": "Suínos", "desc": "Corte macio para assados e medalhões.", "price": 24.98, "img": "lombo_suino_real", "pos": "center center", "unit": "kg"}, {"id": "pernil", "cat": "Suínos", "name": "Pernil", "tag": "Suínos", "desc": "Tradicional, econômico e muito saboroso.", "price": 14.98, "img": "pernil_real", "pos": "center center", "unit": "kg"}, {"id": "combo-churrasco-familia", "cat": "Combos", "name": "Combo Churrasco Família", "tag": "Mais pedido", "desc": "Para reunir a família no fim de semana.", "price": 179.9, "items": ["1kg picanha ou contra filé", "1kg linguiça", "1kg coxinha da asa", "1kg costela ripa"], "img": "picanha", "unit": "combo"}, {"id": "combo-semana", "cat": "Combos", "name": "Combo da Semana", "tag": "Prático", "desc": "Para garantir as misturas da semana.", "price": 89.9, "items": ["1kg acém", "1kg filé de frango", "1kg pernil"], "img": "acem", "unit": "combo"}, {"id": "combo-brasa", "cat": "Combos", "name": "Combo Brasa Econômico", "tag": "Churrasco", "desc": "Para churrasco simples, gostoso e sem complicação.", "price": 129.9, "items": ["1kg fraldinha", "1kg linguiça calabresa", "1kg costela ripa"], "img": "costela_ripa", "unit": "combo"}];
-const itemMap = Object.fromEntries(ITEMS.map(item => [item.id, item]));
+const ITEMS = [{"id":"miolo-paleta","cat":"Bovinos","name":"Miolo da paleta","tag":"Dia a dia","desc":"Bom para panela, bife e receitas caseiras.","price":34.98,"img":"miolo_paleta","pos":"center center","unit":"kg"},{"id":"miolo-acem","cat":"Bovinos","name":"Miolo do acém","tag":"Dia a dia","desc":"Sabor marcante para picadinho, bife e cozido.","price":36.98,"img":"miolo_acem","pos":"center center","unit":"kg"},{"id":"ponta-peito","cat":"Bovinos","name":"Ponta de peito","tag":"Para assar","desc":"Ideal para forno, panela e preparo lento.","price":36.98,"img":"ponta_peito","pos":"center center","unit":"kg"},{"id":"ponta-peito-osso","cat":"Bovinos","name":"Ponta de peito com osso","tag":"Com osso","desc":"Mais sabor para cozidos e receitas demoradas.","price":32.98,"img":"ponta_peito_osso","pos":"center center","unit":"kg"},{"id":"acem","cat":"Bovinos","name":"Acém","tag":"Mais pedido","desc":"Corte versátil para o almoço da família.","price":38.98,"img":"acem","pos":"center center","unit":"kg"},{"id":"costela-ripa","cat":"Bovinos","name":"Costela ripa","tag":"Churrasco","desc":"Perfeita para brasa, forno ou panela.","price":29.98,"img":"costela_ripa","pos":"center center","unit":"kg"},{"id":"costelao","cat":"Bovinos","name":"Costelão","tag":"Churrasco","desc":"Corte robusto para assar com calma.","price":31.98,"img":"costelao","pos":"center center","unit":"kg"},{"id":"picanha","cat":"Bovinos","name":"Picanha","tag":"Corte nobre","desc":"Para churrasco especial e fim de semana.","price":69.98,"img":"picanha","pos":"center center","unit":"kg"},{"id":"contra-file","cat":"Bovinos","name":"Contra filé","tag":"Clássico","desc":"Ótimo para bife, grelha e churrasco.","price":49.98,"img":"contra_file","pos":"center center","unit":"kg"},{"id":"fraldinha","cat":"Bovinos","name":"Fraldinha","tag":"Churrasco","desc":"Macia, saborosa e ótima na grelha.","price":44.98,"img":"fraldinha","pos":"center center","unit":"kg"},{"id":"fraldao","cat":"Bovinos","name":"Fraldão","tag":"Seleção","desc":"Boa opção para assar ou grelhar.","price":39.98,"img":"fraldinha","pos":"center center","unit":"kg"},{"id":"bisteca-bovina","cat":"Bovinos","name":"Bisteca bovina","tag":"Suculenta","desc":"Corte encorpado para grelha ou panela.","price":42.98,"img":"bovinos_osso","pos":"76% 42%","unit":"kg"},{"id":"osso-buco","cat":"Bovinos","name":"Osso buco","tag":"Cozidos","desc":"Perfeito para molhos e pratos de panela.","price":29.98,"img":"osso_buco_real","pos":"center center","unit":"kg"},{"id":"ling-calabresa","cat":"Linguiças","name":"Linguiça calabresa","tag":"Churrasco","desc":"Clássica para brasa, porções e receitas.","price":29.19,"img":"ling_calabresa_real","pos":"center center","unit":"kg"},{"id":"ling-aurora","cat":"Linguiças","name":"Linguiça Aurora","tag":"Marca","desc":"Boa para assar, grelhar ou fritar.","price":33.09,"img":"ling_aurora_real","pos":"center center","unit":"kg"},{"id":"ling-perdigao","cat":"Linguiças","name":"Linguiça Perdigão","tag":"Marca","desc":"Opção prática para churrasco e almoço.","price":38.23,"img":"ling_perdigao_real","pos":"center center","unit":"kg"},{"id":"ling-sadia","cat":"Linguiças","name":"Linguiça Sadia","tag":"Marca","desc":"Muito pedida para churrasco e acompanhamentos.","price":32.89,"img":"ling_sadia_real","pos":"center center","unit":"kg"},{"id":"coxinha-asa","cat":"Aves","name":"Coxinha da asa","tag":"Aves","desc":"Boa para fritar, assar e servir como petisco.","price":18.98,"img":"coxinha_asa_real","pos":"center center","unit":"kg"},{"id":"file-frango","cat":"Aves","name":"Filé de frango","tag":"Aves","desc":"Leve e prático para o dia a dia.","price":26.98,"img":"file_frango_real","pos":"center center","unit":"kg"},{"id":"bisteca-porco","cat":"Suínos","name":"Bisteca de porco","tag":"Suínos","desc":"Suculenta para grelha, forno ou frigideira.","price":22.98,"img":"bisteca_porco_real","pos":"center center","unit":"kg"},{"id":"lombo-suino","cat":"Suínos","name":"Lombo suíno","tag":"Suínos","desc":"Corte macio para assados e medalhões.","price":24.98,"img":"lombo_suino_real","pos":"center center","unit":"kg"},{"id":"pernil","cat":"Suínos","name":"Pernil","tag":"Suínos","desc":"Tradicional, econômico e muito saboroso.","price":14.98,"img":"pernil_real","pos":"center center","unit":"kg"},{"id":"combo-churrasco-familia","cat":"Combos","name":"Combo Churrasco Família","tag":"Mais pedido","desc":"Para reunir a família no fim de semana.","price":179.9,"items":["1kg picanha ou contra filé","1kg linguiça","1kg coxinha da asa","1kg costela ripa"],"img":"picanha","unit":"combo"},{"id":"combo-semana","cat":"Combos","name":"Combo da Semana","tag":"Prático","desc":"Para garantir as misturas da semana.","price":89.9,"items":["1kg acém","1kg filé de frango","1kg pernil"],"img":"acem","unit":"combo"},{"id":"combo-brasa","cat":"Combos","name":"Combo Brasa Econômico","tag":"Churrasco","desc":"Para churrasco simples, gostoso e sem complicação.","price":129.9,"items":["1kg fraldinha","1kg linguiça calabresa","1kg costela ripa"],"img":"costela_ripa","unit":"combo"}];
+
+const itemMap = Object.fromEntries(ITEMS.map(i => [i.id, i]));
 let cart = {};
-try {
-  cart = JSON.parse(localStorage.getItem('paquereCart') || '{}');
-} catch (error) {
-  cart = {};
-}
+try { cart = JSON.parse(localStorage.getItem('paquereCart') || '{}'); } catch(e) { cart = {}; }
 let currentFilter = 'Todos';
 let lastAddedId = null;
 
-const money = value => value.toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
-const fmtQty = item => item.unit === 'combo' ? `${cart[item.id]}x` : `${cart[item.id].toLocaleString('pt-BR')}kg`;
+const money = v => v.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
 const stepFor = item => item.unit === 'combo' ? 1 : 0.5;
 
+// ── Debounce ──────────────────────────────────────────────
+function debounce(fn, ms) {
+  let t;
+  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
+
+// ── localStorage com debounce ─────────────────────────────
 let _saveTimer = null;
 function saveCart() {
-  // Debounce: agrupa escritas no localStorage para não bloquear o main thread
   if (_saveTimer) clearTimeout(_saveTimer);
   _saveTimer = setTimeout(() => {
-    try {
-      localStorage.setItem('paquereCart', JSON.stringify(cart));
-    } catch(e) {}
+    try { localStorage.setItem('paquereCart', JSON.stringify(cart)); } catch(e) {}
   }, 200);
 }
 
+// ── Toast ─────────────────────────────────────────────────
 function showToast(text) {
-  const toast = document.getElementById('toast');
-  toast.textContent = text;
-  toast.classList.add('show');
-  clearTimeout(window.toastTimer);
-  window.toastTimer = setTimeout(() => toast.classList.remove('show'), 1700);
+  const t = document.getElementById('toast');
+  t.textContent = text;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => t.classList.remove('show'), 1700);
 }
 
+// ── Adicionar item ────────────────────────────────────────
 function addItem(id) {
   const item = itemMap[id];
-  if (!item) {
-    alert('Produto não encontrado. Tente novamente.');
-    return;
-  }
-
+  if (!item) return;
   lastAddedId = id;
-  cart[id] = Number((cart[id] || 0) + (item.unit === 'combo' ? 1 : 1)).toFixed(2) * 1;
-
+  cart[id] = Number(((cart[id] || 0) + (item.unit === 'combo' ? 1 : 1)).toFixed(2)) * 1;
   saveCart();
   renderCart();
-  showToast(`${item.name} adicionado ao pedido`);
+  showToast(`${item.name} adicionado`);
 
   const btn = document.querySelector(`[data-add="${id}"]`);
   if (btn) {
     btn.classList.add('added-feedback');
-    const original = btn.textContent;
-    btn.textContent = 'Adicionado';
-    setTimeout(() => {
-      btn.classList.remove('added-feedback');
-      btn.textContent = original || 'Adicionar';
-    }, 650);
+    const orig = btn.textContent;
+    btn.textContent = '✓ Adicionado';
+    setTimeout(() => { btn.classList.remove('added-feedback'); btn.textContent = orig || 'Adicionar'; }, 750);
   }
-
-  document.querySelectorAll('[data-open-cart]').forEach(cartButton => {
-    cartButton.classList.add('pulse-cart');
-    setTimeout(() => cartButton.classList.remove('pulse-cart'), 650);
+  document.querySelectorAll('[data-open-cart]').forEach(b => {
+    b.classList.add('pulse-cart');
+    setTimeout(() => b.classList.remove('pulse-cart'), 650);
   });
 }
 
+// ── Alterar quantidade ────────────────────────────────────
 function changeQty(id, delta) {
   const item = itemMap[id];
   if (!item) return;
   const next = Number(((cart[id] || 0) + delta).toFixed(2));
-  if (next <= 0) delete cart[id];
-  else cart[id] = next;
+  if (next <= 0) delete cart[id]; else cart[id] = next;
   saveCart();
   renderCart();
 }
 
+// ── Limpar pedido ─────────────────────────────────────────
 function clearCart() {
   if (!entries().length) return;
-  const ok = confirm('Deseja limpar todos os itens do pedido?');
-  if (!ok) return;
+  if (!confirm('Deseja limpar todos os itens do pedido?')) return;
   Object.keys(cart).forEach(id => delete cart[id]);
   saveCart();
   renderCart();
@@ -1150,88 +798,73 @@ function clearCart() {
 }
 
 function entries() {
-  return Object.entries(cart).map(([id, qty]) => ({ ...itemMap[id], qty })).filter(item => item.id);
+  return Object.entries(cart).map(([id, qty]) => ({...itemMap[id], qty})).filter(i => i.id);
 }
-
 function totals() {
   const list = entries();
   return {
-    count: list.reduce((sum, item) => sum + item.qty, 0),
     lines: list.length,
-    total: list.reduce((sum, item) => sum + item.price * item.qty, 0)
+    total: list.reduce((s, i) => s + i.price * i.qty, 0)
   };
 }
 
+// ── HTML de um item no carrinho ───────────────────────────
 function _cartItemHTML(item) {
   const step = stepFor(item);
   const qtyText = item.unit === 'combo' ? `${item.qty}x` : `${item.qty.toLocaleString('pt-BR')}kg`;
+  const qtyVal  = item.unit === 'combo' ? item.qty : item.qty.toLocaleString('pt-BR');
   const imgClass = item.img ? `img-${item.img}` : 'img-bovinos_premium';
   return `<div class="cart-item" data-cart-id="${item.id}">
     <div class="cart-thumb ${imgClass}"></div>
     <div class="cart-info">
       <strong>${item.name}</strong>
-      <span class="ci-qty-label">${qtyText} • ${money(item.price)}${item.unit === 'combo' ? '' : '/kg'}</span>
+      <span class="ci-qty-label">${qtyText} • ${money(item.price)}${item.unit==='combo'?'':'/kg'}</span>
     </div>
     <div class="qty">
-      <button type="button" data-qty="${item.id}" data-delta="${-step}">−</button>
-      <b class="ci-qty-val">${item.unit === 'combo' ? item.qty : item.qty.toLocaleString('pt-BR')}</b>
-      <button type="button" data-qty="${item.id}" data-delta="${step}">+</button>
+      <button type="button" data-qty="${item.id}" data-delta="${-step}" aria-label="Diminuir quantidade">−</button>
+      <b class="ci-qty-val">${qtyVal}</b>
+      <button type="button" data-qty="${item.id}" data-delta="${step}" aria-label="Aumentar quantidade">+</button>
     </div>
   </div>`;
 }
 
+// ── Renderizar carrinho (DOM diffing + rAF) ───────────────
 function renderCart() {
-  // Agrupa todos os updates num único frame para evitar múltiplos repaints
   requestAnimationFrame(() => {
     const list = entries();
     const t = totals();
-
-    // Atualiza contadores e totais (textContent = sem reflow)
     document.getElementById('cartCount').textContent = t.lines;
     document.getElementById('mobileCount').textContent = t.lines;
     document.getElementById('cartTotal').textContent = money(t.total);
-    const drawerItemCount = document.getElementById('drawerItemCount');
-    const drawerStatus = document.getElementById('drawerStatus');
-    const clearBtn = document.getElementById('clearCartBtn');
-    if (drawerItemCount) drawerItemCount.textContent = t.lines;
-    if (drawerStatus) drawerStatus.textContent = t.lines ? 'Em andamento' : 'Aguardando';
-    if (clearBtn) clearBtn.disabled = !t.lines;
+    const el = id => document.getElementById(id);
+    if (el('drawerItemCount')) el('drawerItemCount').textContent = t.lines;
+    if (el('drawerStatus'))    el('drawerStatus').textContent = t.lines ? 'Em andamento' : 'Aguardando';
+    if (el('clearCartBtn'))    el('clearCartBtn').disabled = !t.lines;
 
-    const cartList = document.getElementById('cartList');
-
+    const cartList = el('cartList');
     if (!list.length) {
       cartList.innerHTML = '<div class="empty">🛒<br>Seu pedido está vazio.<br>Adicione carnes, linguiças ou combos.</div>';
       return;
     }
+    const existing = new Set([...cartList.querySelectorAll('[data-cart-id]')].map(e => e.dataset.cartId));
+    const current  = new Set(list.map(i => i.id));
 
-    // DOM diffing: só atualiza o que mudou, não reconstrói tudo
-    const existingIds = new Set([...cartList.querySelectorAll('[data-cart-id]')].map(el => el.dataset.cartId));
-    const newIds = new Set(list.map(item => item.id));
-
-    // Remove itens que saíram do carrinho
-    existingIds.forEach(id => {
-      if (!newIds.has(id)) {
-        const el = cartList.querySelector(`[data-cart-id="${id}"]`);
-        if (el) el.remove();
-      }
+    existing.forEach(id => {
+      if (!current.has(id)) cartList.querySelector(`[data-cart-id="${id}"]`)?.remove();
     });
 
-    // Adiciona novos ou atualiza existentes
-    list.forEach((item, idx) => {
-      const existing = cartList.querySelector(`[data-cart-id="${item.id}"]`);
-      if (existing) {
-        // Só atualiza os valores numéricos sem recriar o nó
-        const qtyText = item.unit === 'combo' ? `${item.qty}x` : `${item.qty.toLocaleString('pt-BR')}kg`;
-        const qtyVal = item.unit === 'combo' ? item.qty : item.qty.toLocaleString('pt-BR');
-        const lbl = existing.querySelector('.ci-qty-label');
-        const val = existing.querySelector('.ci-qty-val');
-        if (lbl) lbl.textContent = `${qtyText} • ${money(item.price)}${item.unit === 'combo' ? '' : '/kg'}`;
-        if (val) val.textContent = qtyVal;
+    list.forEach(item => {
+      const node = cartList.querySelector(`[data-cart-id="${item.id}"]`);
+      if (node) {
+        const qtyText = item.unit==='combo' ? `${item.qty}x` : `${item.qty.toLocaleString('pt-BR')}kg`;
+        const lbl = node.querySelector('.ci-qty-label');
+        const val = node.querySelector('.ci-qty-val');
+        if (lbl) lbl.textContent = `${qtyText} • ${money(item.price)}${item.unit==='combo'?'':'/kg'}`;
+        if (val) val.textContent = item.unit==='combo' ? item.qty : item.qty.toLocaleString('pt-BR');
       } else {
-        // Novo item: cria e anima entrada
-        const temp = document.createElement('div');
-        temp.innerHTML = _cartItemHTML(item);
-        const newEl = temp.firstElementChild;
+        const tmp = document.createElement('div');
+        tmp.innerHTML = _cartItemHTML(item);
+        const newEl = tmp.firstElementChild;
         newEl.classList.add('just-added');
         setTimeout(() => newEl.classList.remove('just-added'), 400);
         cartList.appendChild(newEl);
@@ -1240,212 +873,227 @@ function renderCart() {
   });
 }
 
-function openCart() {
+// ── Abrir / fechar carrinho ───────────────────────────────
+function openCart()  {
   document.getElementById('cartOverlay').classList.add('open');
   document.getElementById('cartDrawer').classList.add('open');
   document.body.style.overflow = 'hidden';
   renderCart();
 }
-
 function closeCart() {
   document.getElementById('cartOverlay').classList.remove('open');
   document.getElementById('cartDrawer').classList.remove('open');
   document.body.style.overflow = '';
 }
 
-function sendWhatsApp() {
-  const list = entries();
-  if (!list.length) {
-    alert('Adicione ao menos um item ao pedido.');
-    return;
+// ── Tipo de pedido: mostra/oculta campo endereço ──────────
+function onOrderTypeChange() {
+  const type = document.getElementById('orderType').value;
+  const addrField = document.getElementById('addressField');
+  const addrInput = document.getElementById('address');
+  if (type === 'Entrega') {
+    addrField.style.display = '';
+    addrInput.placeholder = 'Rua, número, bairro, referência';
+  } else {
+    addrField.style.display = 'none';
+    addrInput.value = '';
+    clearFieldError('address');
   }
-  const name = document.getElementById('customerName').value.trim();
-  if (!name) {
-    document.getElementById('customerName').focus();
-    document.getElementById('customerName').style.border = '2px solid var(--red)';
-    document.getElementById('customerName').placeholder = '⚠️ Informe seu nome para continuar';
-    setTimeout(()=>{ document.getElementById('customerName').style.border=''; }, 3000);
-    return;
+}
+
+// ── Validação de campos ───────────────────────────────────
+function setFieldError(fieldId, msgId, show) {
+  const input = document.getElementById(fieldId);
+  const msg   = document.getElementById(msgId);
+  if (!input || !msg) return;
+  if (show) {
+    input.classList.add('field-error');
+    msg.classList.add('visible');
+  } else {
+    input.classList.remove('field-error');
+    msg.classList.remove('visible');
+  }
+}
+function clearFieldError(fieldId) {
+  const input = document.getElementById(fieldId);
+  if (!input) return;
+  input.classList.remove('field-error');
+  const msg = input.closest('.field')?.querySelector('.field-msg');
+  if (msg) msg.classList.remove('visible');
+}
+
+function validateForm() {
+  let ok = true;
+  const name      = document.getElementById('customerName').value.trim();
+  const orderType = document.getElementById('orderType').value;
+  const payment   = document.getElementById('payment').value;
+  const address   = document.getElementById('address').value.trim();
+
+  setFieldError('customerName', 'msg-name',      !name);
+  setFieldError('orderType',    'msg-orderType',  !orderType);
+  setFieldError('payment',      'msg-payment',    !payment);
+
+  if (!name || !orderType || !payment) ok = false;
+
+  if (orderType === 'Entrega') {
+    setFieldError('address', 'msg-address', !address);
+    if (!address) ok = false;
   }
 
+  if (!ok) {
+    // Rola até o primeiro campo com erro
+    const firstErr = document.querySelector('.field-error');
+    if (firstErr) firstErr.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+  return ok;
+}
+
+// ── Enviar WhatsApp ───────────────────────────────────────
+function sendWhatsApp() {
+  const list = entries();
+  if (!list.length) { showToast('Adicione ao menos um item'); return; }
+  if (!validateForm()) return;
+
+  const name      = document.getElementById('customerName').value.trim();
   const orderType = document.getElementById('orderType').value;
-  const address = document.getElementById('address').value.trim();
-  const payment = document.getElementById('payment').value;
-  const notes = document.getElementById('notes').value.trim();
-  const total = totals().total;
+  const address   = document.getElementById('address').value.trim();
+  const payment   = document.getElementById('payment').value;
+  const notes     = document.getElementById('notes').value.trim();
+  const total     = totals().total;
 
   const lines = [];
   lines.push('🥩 *MERCADO PAQUERE — NOVO PEDIDO*');
   lines.push('');
   lines.push('Olá! Gostaria de fazer um pedido.');
   lines.push('');
-
   lines.push('👤 *Dados do cliente*');
-  if (name) lines.push(`• Nome: ${name}`);
+  lines.push(`• Nome: ${name}`);
   lines.push(`• Tipo de pedido: ${orderType}`);
-  if (address) {
-    lines.push(orderType === 'Entrega'
-      ? `• Endereço/bairro: ${address}`
-      : `• Retirada/observação: ${address}`
-    );
-  }
+  if (address) lines.push(orderType === 'Entrega' ? `• Endereço de entrega: ${address}` : `• Observação de retirada: ${address}`);
   lines.push(`• Pagamento: ${payment}`);
   lines.push('');
-
   lines.push('🛒 *Itens do pedido*');
-  list.forEach((item, index) => {
-    const itemTotal = item.price * item.qty;
+  list.forEach((item, idx) => {
+    const sub = item.price * item.qty;
     if (item.unit === 'combo') {
-      lines.push(`${index + 1}. *${item.name}*`);
+      lines.push(`${idx+1}. *${item.name}*`);
       lines.push(`   Quantidade: ${item.qty}x`);
       lines.push(`   Valor unitário: ${money(item.price)}`);
-      lines.push(`   Subtotal estimado: ${money(itemTotal)}`);
-      if (item.items && item.items.length) {
-        lines.push(`   Inclui: ${item.items.join(', ')}`);
-      }
+      lines.push(`   Subtotal estimado: ${money(sub)}`);
+      if (item.items?.length) lines.push(`   Inclui: ${item.items.join(', ')}`);
     } else {
-      lines.push(`${index + 1}. *${item.name}*`);
+      lines.push(`${idx+1}. *${item.name}*`);
       lines.push(`   Quantidade aproximada: ${item.qty.toLocaleString('pt-BR')}kg`);
       lines.push(`   Valor por kg: ${money(item.price)}`);
-      lines.push(`   Subtotal estimado: ${money(itemTotal)}`);
+      lines.push(`   Subtotal estimado: ${money(sub)}`);
     }
     lines.push('');
   });
-
   lines.push(`💰 *Total estimado:* ${money(total)}`);
-  if (notes) {
-    lines.push('');
-    lines.push(`📝 *Observações:* ${notes}`);
-  }
-
+  if (notes) { lines.push(''); lines.push(`📝 *Observações:* ${notes}`); }
   lines.push('');
   lines.push('⚠️ Valor final sujeito à confirmação de peso, disponibilidade e preço do dia.');
+  lines.push(orderType === 'Entrega'
+    ? 'Pode confirmar disponibilidade, peso final, taxa de entrega e previsão?'
+    : 'Pode confirmar disponibilidade, peso final e horário para retirada?');
 
-  if (orderType === 'Entrega') {
-    lines.push('Pode confirmar disponibilidade, peso final, taxa de entrega e previsão?');
-  } else {
-    lines.push('Pode confirmar disponibilidade, peso final e horário para retirada?');
-  }
-
-  const message = lines.join(String.fromCharCode(10));
-  window.open('https://wa.me/5518981309332?text=' + encodeURIComponent(message), '_blank');
+  window.open('https://wa.me/5518981309332?text=' + encodeURIComponent(lines.join('\n')), '_blank', 'noopener,noreferrer');
 }
 
+// ── Filtros ───────────────────────────────────────────────
 function setFilter(value) {
   currentFilter = value;
-  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.filter === value));
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === value));
   applyFilters();
 }
 
 function applyFilters() {
   const q = document.getElementById('searchInput').value.trim().toLowerCase();
   document.querySelectorAll('.product-card').forEach(card => {
-    const cat = card.dataset.cat;
-    const name = card.dataset.name;
-    const okCat = currentFilter === 'Todos' || cat === currentFilter;
-    const okSearch = !q || name.includes(q) || cat.toLowerCase().includes(q);
+    const okCat    = currentFilter === 'Todos' || card.dataset.cat === currentFilter;
+    const okSearch = !q || card.dataset.name.includes(q) || card.dataset.cat.toLowerCase().includes(q);
     card.classList.toggle('hidden', !(okCat && okSearch));
   });
 }
 
-function bindStaticButtons() {
-  document.querySelectorAll('[data-add]').forEach(button => {
-    if (button.dataset.boundAdd === 'true') return;
-    button.dataset.boundAdd = 'true';
-    button.addEventListener('click', event => {
-      event.preventDefault();
-      event.stopPropagation();
-      addItem(button.dataset.add);
-    });
+// ── Bindings (event delegation centralizado) ──────────────
+function bindButtons() {
+  document.querySelectorAll('[data-add]').forEach(btn => {
+    if (btn.dataset.boundAdd) return;
+    btn.dataset.boundAdd = '1';
+    btn.addEventListener('click', e => { e.preventDefault(); addItem(btn.dataset.add); });
   });
-
-  document.querySelectorAll('[data-filter]').forEach(button => {
-    if (button.dataset.boundFilter === 'true') return;
-    button.dataset.boundFilter = 'true';
-    button.addEventListener('click', event => {
-      event.preventDefault();
-      setFilter(button.dataset.filter);
-    });
+  document.querySelectorAll('[data-filter]').forEach(btn => {
+    if (btn.dataset.boundFilter) return;
+    btn.dataset.boundFilter = '1';
+    btn.addEventListener('click', e => { e.preventDefault(); setFilter(btn.dataset.filter); });
   });
-
-  document.querySelectorAll('[data-open-cart]').forEach(button => {
-    if (button.dataset.boundOpen === 'true') return;
-    button.dataset.boundOpen = 'true';
-    button.addEventListener('click', event => {
-      event.preventDefault();
-      openCart();
-    });
+  document.querySelectorAll('[data-open-cart]').forEach(btn => {
+    if (btn.dataset.boundOpen) return;
+    btn.dataset.boundOpen = '1';
+    btn.addEventListener('click', e => { e.preventDefault(); openCart(); });
   });
-
-  document.querySelectorAll('[data-close-cart]').forEach(button => {
-    if (button.dataset.boundClose === 'true') return;
-    button.dataset.boundClose = 'true';
-    button.addEventListener('click', event => {
-      event.preventDefault();
-      closeCart();
-    });
+  document.querySelectorAll('[data-close-cart]').forEach(btn => {
+    if (btn.dataset.boundClose) return;
+    btn.dataset.boundClose = '1';
+    btn.addEventListener('click', e => { e.preventDefault(); closeCart(); });
   });
 }
 
-document.addEventListener('click', event => {
-  const qty = event.target.closest('[data-qty]');
-  if (qty) {
-    event.preventDefault();
-    changeQty(qty.dataset.qty, Number(qty.dataset.delta));
-  }
+// ── Limpar erro ao digitar/selecionar ─────────────────────
+['customerName','orderType','payment','address'].forEach(id => {
+  document.getElementById(id)?.addEventListener('input',  () => clearFieldError(id));
+  document.getElementById(id)?.addEventListener('change', () => clearFieldError(id));
 });
 
+// ── Qty via event delegation ──────────────────────────────
+document.addEventListener('click', e => {
+  const btn = e.target.closest('[data-qty]');
+  if (btn) { e.preventDefault(); changeQty(btn.dataset.qty, Number(btn.dataset.delta)); }
+});
+
+// ── Eventos globais ───────────────────────────────────────
 document.getElementById('cartOverlay').addEventListener('click', closeCart);
 document.getElementById('sendBtn').addEventListener('click', sendWhatsApp);
 document.getElementById('clearCartBtn').addEventListener('click', clearCart);
-document.getElementById('searchInput').addEventListener('input', applyFilters);
-document.getElementById('orderType').addEventListener('change', () => {
-  const type = document.getElementById('orderType').value;
-  document.getElementById('address').placeholder = type === 'Entrega'
-    ? 'Informe endereço e bairro'
-    : 'Ex.: retirar hoje após as 18h';
-});
+document.getElementById('orderType').addEventListener('change', onOrderTypeChange);
 
+// CORREÇÃO: debounce de 250 ms na busca
+document.getElementById('searchInput').addEventListener('input', debounce(applyFilters, 250));
 
-window.addItem = addItem;
-window.openCart = openCart;
+// ── Exports (compatibilidade com HTML inline legado) ──────
+window.addItem   = addItem;
+window.openCart  = openCart;
 window.closeCart = closeCart;
-window.sendWhatsApp = sendWhatsApp;
-window.changeQty = changeQty;
-window.clearCart = clearCart;
 
-bindStaticButtons();
+// ── Init ──────────────────────────────────────────────────
+bindButtons();
 renderCart();
 applyFilters();
 
-// Loading screen
-(function(){
+// ── Loading screen — CORREÇÃO: fallback máximo 1800 ms ────
+(function() {
   const ls = document.getElementById('loading-screen');
   if (!ls) return;
-  const hide = () => {
-    ls.classList.add('hidden');
-    setTimeout(() => ls.remove(), 800);
-  };
+  const hide = () => { ls.classList.add('hidden'); setTimeout(() => ls.remove(), 800); };
   if (document.readyState === 'complete') {
-    setTimeout(hide, 2000);
+    setTimeout(hide, 1200);
   } else {
-    window.addEventListener('load', () => setTimeout(hide, 1800));
-    setTimeout(hide, 3500); // fallback máximo
+    window.addEventListener('load', () => setTimeout(hide, 1000));
+    setTimeout(hide, 1800); // fallback máximo reduzido
   }
 })();
 
-
-// Intersection Observer para animações de entrada
-const _observer = new IntersectionObserver((entries) => {
+// ── Intersection Observer — animações de entrada ──────────
+const _obs = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('visible'), i * 60);
-      _observer.unobserve(entry.target);
+      setTimeout(() => entry.target.classList.add('visible'), i * 55);
+      _obs.unobserve(entry.target);
     }
   });
 }, { threshold: 0.08 });
-document.querySelectorAll('.product-card, .oferta-card, .combo-card, .step-card').forEach(el => _observer.observe(el));
-
+document.querySelectorAll('.product-card,.oferta-card,.combo-card,.step-card').forEach(el => _obs.observe(el));
 </script>
 </body>
 </html>
