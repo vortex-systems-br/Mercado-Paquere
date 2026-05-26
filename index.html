@@ -214,6 +214,79 @@ button,[data-add],[data-qty],[data-open-cart],[data-close-cart],[data-filter]{to
 .map-embed-wrap{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--goldLine);box-shadow:0 24px 60px rgba(0,0,0,.4)}
 .map-iframe{width:100%;height:420px;border:none;display:block;filter:saturate(.85) brightness(.9)}
 .map-badge{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:rgba(7,5,4,.85);backdrop-filter:blur(8px);color:var(--cream);font-size:13px;font-weight:700;padding:8px 18px;border-radius:99px;border:1px solid var(--goldLine);white-space:nowrap}
+
+/* ===== CORREÇÃO DEFINITIVA DO LOADING NO MOBILE =====
+   Mantém "MERCADO PAQUERÊ" por extenso, centralizado e sem quebrar linha.
+*/
+#loading-screen{
+  padding:24px 14px calc(24px + var(--safe));
+  overflow:hidden;
+}
+
+#loading-screen .ls-logo-wrap{
+  width:100%;
+  max-width:720px;
+  padding-inline:12px;
+  align-items:center;
+  text-align:center;
+}
+
+#loading-screen .ls-title{
+  display:block;
+  width:100%;
+  max-width:100%;
+  text-align:center;
+  white-space:nowrap !important;
+  overflow:visible;
+  line-height:.98 !important;
+  transform-origin:center center;
+  font-size:clamp(24px,7vw,72px) !important;
+  letter-spacing:clamp(.018em,.72vw,.08em) !important;
+}
+
+#loading-screen .ls-sub{
+  text-align:center;
+  white-space:nowrap;
+}
+
+@media(max-width:480px){
+  #loading-screen{gap:28px}
+  #loading-screen .ls-logo-wrap{gap:16px;padding-inline:8px}
+  #loading-screen .ls-icon{
+    font-size:42px !important;
+    margin-bottom:2px;
+  }
+  #loading-screen .ls-title{
+    font-size:clamp(22px,6.65vw,32px) !important;
+    letter-spacing:.038em !important;
+  }
+  #loading-screen .ls-sub{
+    font-size:11px !important;
+    letter-spacing:.24em !important;
+  }
+  #loading-screen .ls-bar-wrap{
+    width:min(310px,78vw) !important;
+  }
+}
+
+@media(max-width:380px){
+  #loading-screen .ls-title{
+    font-size:clamp(20px,6.15vw,25px) !important;
+    letter-spacing:.028em !important;
+  }
+  #loading-screen .ls-sub{
+    font-size:10px !important;
+    letter-spacing:.20em !important;
+  }
+}
+
+@media(max-width:340px){
+  #loading-screen .ls-title{
+    font-size:20px !important;
+    letter-spacing:.018em !important;
+  }
+}
+
 </style>
 
 <!-- Google Analytics 4 — substitua G-XXXXXXXXXX pelo seu ID real -->
