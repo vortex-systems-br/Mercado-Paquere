@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>Admin — Mercado Paquere</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#070504;--bg2:#100b08;--card:#1b120e;--card2:#241813;
+  --cream:#fff3e4;--muted:#c6b4a1;--line:rgba(255,255,255,.10);
+  --red:#c61f2f;--gold:#d9a94b;--green:#25D366;
+  --goldLine:rgba(217,169,75,.30);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--cream);min-height:100vh}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit}
+
+/* ── LOGIN ───────────────────────────────────── */
+#loginScreen{
+  position:fixed;inset:0;z-index:999;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+}
+.login-box{
+  width:100%;max-width:380px;
+  background:var(--card2);border:1px solid var(--goldLine);
+  border-radius:24px;padding:40px 32px;text-align:center;
+}
+.login-logo{font-family:'Playfair Display',Georgia,serif;font-size:28px;font-weight:900;color:var(--gold);margin-bottom:4px}
+.login-sub{font-size:12px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:32px}
+.login-box input{
+  width:100%;padding:14px 16px;border-radius:14px;
+  border:1px solid var(--line);background:#0c0806;
+  color:var(--cream);font-size:16px;outline:none;
+  margin-bottom:12px;letter-spacing:2px;
+  transition:border-color .2s;
+}
+.login-box input:focus{border-color:var(--goldLine)}
+.login-btn{
+  width:100%;padding:14px;border-radius:14px;border:0;
+  background:linear-gradient(135deg,var(--red),#81111b);
+  color:#fff;font-weight:700;font-size:15px;cursor:pointer;
+  transition:opacity .2s;
+}
+.login-btn:hover{opacity:.9}
+.login-err{font-size:13px;color:#ff6b6b;margin-top:10px;min-height:20px}
+
+/* ── LAYOUT ──────────────────────────────────── */
+#app{display:none}
+.topbar{
+  position:sticky;top:0;z-index:80;
+  background:rgba(7,5,4,.92);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);
+}
+.nav{
+  max-width:1200px;margin:auto;
+  height:64px;display:flex;align-items:center;
+  justify-content:space-between;gap:16px;padding:0 20px;
+}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-brand strong{font-family:'Playfair Display',serif;font-size:18px;color:var(--gold)}
+.nav-brand span{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)}
+.admin-badge{
+  background:rgba(198,31,47,.18);border:1px solid rgba(198,31,47,.35);
+  color:#ffb8b8;font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:1px;padding:3px 10px;border-radius:999px;
+}
+.nav-right{display:flex;align-items:center;gap:10px}
+.last-save{font-size:12px;color:var(--muted)}
+.save-btn{
+  padding:10px 20px;border-radius:12px;border:0;
+  background:linear-gradient(135deg,var(--green),#118c43);
+  color:#fff;font-weight:700;font-size:13px;cursor:pointer;
+  display:flex;align-items:center;gap:6px;
+}
+.save-btn:hover{filter:brightness(1.08)}
+.logout-btn{
+  padding:10px 14px;border-radius:12px;border:1px solid var(--line);
+  background:transparent;color:var(--muted);font-size:13px;cursor:pointer;
+}
+.logout-btn:hover{border-color:var(--red);color:#ffb8b8}
+
+/* ── TABS ────────────────────────────────────── */
+.tabs-bar{
+  max-width:1200px;margin:0 auto;
+  padding:0 20px;display:flex;gap:4px;border-bottom:1px solid var(--line);
+}
+.tab{
+  padding:14px 20px;font-size:14px;font-weight:600;color:var(--muted);
+  background:transparent;border:0;cursor:pointer;
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:color .15s,border-color .15s;
+}
+.tab.active{color:var(--cream);border-bottom-color:var(--gold)}
+.tab:hover{color:var(--cream)}
+
+/* ── CONTEÚDO ────────────────────────────────── */
+.content{max-width:1200px;margin:0 auto;padding:28px 20px 80px}
+.pane{display:none}
+.pane.active{display:block}
+
+/* ── SEÇÃO ───────────────────────────────────── */
+.sec-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:18px;gap:12px;flex-wrap:wrap}
+.sec-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700}
+.sec-sub{font-size:13px;color:var(--muted);margin-top:3px}
+.sec-action{
+  padding:9px 18px;border-radius:10px;border:1px solid var(--line);
+  background:transparent;color:var(--cream);font-size:13px;font-weight:600;cursor:pointer;
+}
+.sec-action:hover{background:rgba(255,255,255,.06)}
+
+/* ── PRODUTOS TABLE ──────────────────────────── */
+.prod-table{width:100%;border-collapse:separate;border-spacing:0 6px}
+.prod-table thead th{
+  font-size:11px;text-transform:uppercase;letter-spacing:1px;
+  color:var(--muted);font-weight:600;padding:8px 14px;text-align:left;
+}
+.prod-row{background:var(--card);border-radius:14px;transition:background .15s}
+.prod-row:hover{background:var(--card2)}
+.prod-row td{padding:12px 14px;vertical-align:middle}
+.prod-row td:first-child{border-radius:14px 0 0 14px}
+.prod-row td:last-child{border-radius:0 14px 14px 0}
+
+.prod-img{
+  width:52px;height:52px;border-radius:10px;
+  background-size:cover;background-position:center;background-color:#332820;
+  flex-shrink:0;
+}
+.prod-name{font-weight:600;font-size:14px;display:block;margin-bottom:2px}
+.prod-cat{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}
+
+.price-input{
+  width:110px;padding:9px 12px;border-radius:10px;
+  border:1px solid var(--line);background:#0c0806;
+  color:var(--gold);font-weight:700;font-size:14px;
+  outline:none;transition:border-color .15s;
+}
+.price-input:focus{border-color:var(--goldLine)}
+.price-unit{font-size:11px;color:var(--muted);margin-left:4px}
+
+.old-input{
+  width:100px;padding:9px 12px;border-radius:10px;
+  border:1px solid var(--line);background:#0c0806;
+  color:#8d7a68;font-size:13px;
+  outline:none;transition:border-color .15s;
+}
+.old-input:focus{border-color:var(--goldLine)}
+
+/* ── TOGGLE DISPONIBILIDADE ──────────────────── */
+.avail-wrap{display:flex;gap:6px;align-items:center}
+.avail-select{
+  padding:8px 12px;border-radius:10px;
+  border:1px solid var(--line);background:#0c0806;
+  color:var(--cream);font-size:13px;outline:none;cursor:pointer;
+}
+.avail-dot{width:8px;height:8px;border-radius:50%}
+.avail-dot.ok{background:#25D366}
+.avail-dot.low{background:var(--gold)}
+.avail-dot.out{background:var(--red)}
+
+/* ── OFERTA TOGGLE ───────────────────────────── */
+.toggle-wrap{display:flex;align-items:center;gap:8px}
+.toggle{position:relative;width:44px;height:24px;cursor:pointer;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0}
+.slider{
+  position:absolute;inset:0;border-radius:12px;
+  background:rgba(255,255,255,.1);border:1px solid var(--line);
+  transition:background .2s;
+}
+.slider:before{
+  content:"";position:absolute;
+  width:18px;height:18px;border-radius:50%;
+  background:#fff;top:2px;left:2px;transition:.2s;
+}
+.toggle input:checked + .slider{background:linear-gradient(135deg,var(--red),#81111b);border-color:var(--red)}
+.toggle input:checked + .slider:before{transform:translateX(20px)}
+
+/* ── COMBOS ──────────────────────────────────── */
+.combo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:4px}
+.combo-card-adm{
+  background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;
+}
+.combo-card-adm h3{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:4px}
+.combo-card-adm ul{color:var(--muted);font-size:13px;padding-left:18px;margin-bottom:16px}
+.combo-card-adm ul li{margin-bottom:3px}
+.combo-price-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.combo-price-row label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:600}
+
+/* ── HORÁRIOS ────────────────────────────────── */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:4px}
+@media(max-width:600px){.info-grid{grid-template-columns:1fr}}
+.info-card-adm{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px}
+.info-card-adm h3{font-size:15px;font-weight:600;margin-bottom:14px;color:var(--cream)}
+.field-row{display:grid;gap:6px;margin-bottom:12px}
+.field-row label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:600}
+.field-row input,.field-row textarea{
+  width:100%;padding:10px 12px;border-radius:10px;
+  border:1px solid var(--line);background:#0c0806;
+  color:var(--cream);font-size:14px;outline:none;
+  transition:border-color .15s;
+}
+.field-row textarea{min-height:80px;resize:vertical}
+.field-row input:focus,.field-row textarea:focus{border-color:var(--goldLine)}
+
+/* ── EXPORT CARD ─────────────────────────────── */
+.export-card{
+  background:linear-gradient(135deg,rgba(217,169,75,.08),rgba(198,31,47,.06));
+  border:1px solid var(--goldLine);border-radius:18px;
+  padding:24px 28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+  margin-top:28px;
+}
+.export-card-text strong{display:block;font-size:16px;font-weight:600;margin-bottom:4px}
+.export-card-text span{font-size:13px;color:var(--muted);line-height:1.5}
+.export-card-btns{display:flex;gap:10px;flex-wrap:wrap;margin-left:auto}
+.export-btn{
+  padding:11px 22px;border-radius:12px;border:1px solid var(--goldLine);
+  background:transparent;color:var(--gold);font-weight:700;font-size:13px;cursor:pointer;
+  transition:background .15s;white-space:nowrap;
+}
+.export-btn:hover{background:rgba(217,169,75,.10)}
+.export-btn.primary{
+  background:linear-gradient(135deg,var(--gold),#b8892c);
+  border-color:transparent;color:#1b120e;
+}
+.export-btn.primary:hover{filter:brightness(1.08)}
+
+/* ── TOAST ───────────────────────────────────── */
+.toast{
+  position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(10px);
+  background:var(--card2);border:1px solid var(--goldLine);
+  color:var(--cream);padding:12px 22px;border-radius:999px;
+  font-size:14px;font-weight:600;
+  opacity:0;pointer-events:none;transition:.25s ease;z-index:999;
+  white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── STATUS BAR ──────────────────────────────── */
+.status-bar{
+  background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.2);
+  border-radius:12px;padding:10px 16px;margin-bottom:24px;
+  font-size:13px;color:#4ade80;display:flex;align-items:center;gap:8px;
+}
+.status-bar span{color:var(--muted)}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#25D366;flex-shrink:0}
+
+/* ── SEARCH ──────────────────────────────────── */
+.search-bar{
+  width:100%;max-width:360px;padding:11px 16px;
+  border-radius:12px;border:1px solid var(--line);
+  background:#0c0806;color:var(--cream);font-size:14px;outline:none;
+  transition:border-color .15s;margin-bottom:16px;
+}
+.search-bar:focus{border-color:var(--goldLine)}
+
+@media(max-width:760px){
+  .prod-table thead{display:none}
+  .prod-row{display:block;border-radius:14px;margin-bottom:8px;padding:4px 0}
+  .prod-row td{display:flex;align-items:center;justify-content:space-between;padding:8px 14px}
+  .prod-row td:before{content:attr(data-label);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-right:8px}
+  .nav-right .last-save{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">Paquere</div>
+    <div class="login-sub">Painel Administrativo</div>
+    <input type="password" id="pwdInput" placeholder="Senha de acesso" autocomplete="current-password"/>
+    <button class="login-btn" onclick="doLogin()">Entrar</button>
+    <div class="login-err" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <header class="topbar">
+    <div class="nav">
+      <div class="nav-brand">
+        <strong>Paquere</strong>
+        <span>Admin</span>
+        <span class="admin-badge">🔒 Restrito</span>
+      </div>
+      <div class="nav-right">
+        <span class="last-save" id="lastSaveLabel">Nenhuma alteração salva</span>
+        <button class="save-btn" onclick="saveAll()">💾 Salvar alterações</button>
+        <button class="logout-btn" onclick="doLogout()">Sair</button>
+      </div>
+    </div>
+    <div class="tabs-bar">
+      <button class="tab active" onclick="showTab('produtos')">🥩 Produtos</button>
+      <button class="tab" onclick="showTab('combos')">📦 Combos</button>
+      <button class="tab" onclick="showTab('info')">🏪 Loja</button>
+      <button class="tab" onclick="showTab('exportar')">📤 Exportar</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- ── PRODUTOS ── -->
+    <div class="pane active" id="pane-produtos">
+      <div class="sec-header">
+        <div>
+          <div class="sec-title">Gerenciar produtos</div>
+          <div class="sec-sub">Edite preços e disponibilidade. Salve no fim da página.</div>
+        </div>
+      </div>
+      <div id="statusBar" class="status-bar" style="display:none">
+        <span class="status-dot"></span>
+        <strong id="statusText">Configuração carregada</strong>
+        <span id="statusDate"></span>
+      </div>
+      <input class="search-bar" type="text" placeholder="Buscar produto..." id="prodSearch" oninput="filterProdTable()"/>
+      <div style="overflow-x:auto">
+        <table class="prod-table" id="prodTable">
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Preço atual (R$/kg)</th>
+              <th>Preço riscado (opcional)</th>
+              <th>Disponibilidade</th>
+              <th>Destaque na oferta</th>
+            </tr>
+          </thead>
+          <tbody id="prodTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── COMBOS ── -->
+    <div class="pane" id="pane-combos">
+      <div class="sec-header">
+        <div>
+          <div class="sec-title">Combos prontos</div>
+          <div class="sec-sub">Atualize os preços dos combos.</div>
+        </div>
+      </div>
+      <div class="combo-grid" id="comboGrid"></div>
+    </div>
+
+    <!-- ── INFO LOJA ── -->
+    <div class="pane" id="pane-info">
+      <div class="sec-header">
+        <div>
+          <div class="sec-title">Informações da loja</div>
+          <div class="sec-sub">Esses dados aparecem no rodapé e na seção "Como chegar".</div>
+        </div>
+      </div>
+      <div class="info-grid">
+        <div class="info-card-adm">
+          <h3>📞 Contato</h3>
+          <div class="field-row"><label>WhatsApp (com DDD)</label><input id="storePhone" type="tel" placeholder="5518981309332"/></div>
+          <div class="field-row"><label>Instagram</label><input id="storeInsta" placeholder="@mercadopaquere"/></div>
+        </div>
+        <div class="info-card-adm">
+          <h3>📍 Endereço</h3>
+          <div class="field-row"><label>Endereço completo</label><input id="storeAddr" placeholder="Cabo PM Marcos Volnei Guerra, 13"/></div>
+          <div class="field-row"><label>Cidade / Estado</label><input id="storeCity" placeholder="Araçatuba — SP"/></div>
+        </div>
+        <div class="info-card-adm">
+          <h3>🕐 Horários</h3>
+          <div class="field-row"><label>Segunda a sábado</label><input id="hoursWeek" placeholder="7h às 20h"/></div>
+          <div class="field-row"><label>Domingo</label><input id="hoursSun" placeholder="7h às 13h"/></div>
+        </div>
+        <div class="info-card-adm">
+          <h3>🚗 Entrega</h3>
+          <div class="field-row"><label>Informação de entrega</label><textarea id="deliveryInfo" placeholder="Entrega local sob consulta. Taxa varia por bairro."></textarea></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── EXPORTAR ── -->
+    <div class="pane" id="pane-exportar">
+      <div class="sec-header">
+        <div>
+          <div class="sec-title">Exportar configuração</div>
+          <div class="sec-sub">Gere o arquivo <code style="font-size:12px;background:rgba(255,255,255,.06);padding:2px 7px;border-radius:5px">config.json</code> e faça o upload no servidor para que todos os clientes vejam os novos preços.</div>
+        </div>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;margin-bottom:18px">
+        <h3 style="font-size:15px;font-weight:600;margin-bottom:16px">Como funciona</h3>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <span style="background:var(--red);color:#fff;border-radius:50%;width:24px;height:24px;display:grid;place-items:center;font-size:12px;font-weight:700;flex-shrink:0">1</span>
+            <div><strong style="font-size:14px;display:block;margin-bottom:2px">Edite os preços nas abas anteriores</strong><span style="font-size:13px;color:var(--muted)">Altere preços, combos e informações da loja.</span></div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <span style="background:var(--red);color:#fff;border-radius:50%;width:24px;height:24px;display:grid;place-items:center;font-size:12px;font-weight:700;flex-shrink:0">2</span>
+            <div><strong style="font-size:14px;display:block;margin-bottom:2px">Clique em "Baixar config.json"</strong><span style="font-size:13px;color:var(--muted)">Um arquivo será salvo no seu dispositivo.</span></div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <span style="background:var(--red);color:#fff;border-radius:50%;width:24px;height:24px;display:grid;place-items:center;font-size:12px;font-weight:700;flex-shrink:0">3</span>
+            <div><strong style="font-size:14px;display:block;margin-bottom:2px">Faça upload do arquivo na raiz do site</strong><span style="font-size:13px;color:var(--muted)">Coloque na mesma pasta do index.html. O site do cliente atualiza automaticamente.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="export-card">
+        <div class="export-card-text">
+          <strong>Configuração atual</strong>
+          <span id="exportSummary">Carregando resumo...</span>
+        </div>
+        <div class="export-card-btns">
+          <button class="export-btn" onclick="importJSON()">📂 Importar JSON</button>
+          <button class="export-btn primary" onclick="downloadJSON()">⬇️ Baixar config.json</button>
+        </div>
+      </div>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="handleImport(event)"/>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /app -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════
+   CONFIGURAÇÃO — altere a senha aqui
+═══════════════════════════════════════════ */
+const ADMIN_PASSWORD = 'paquere2025';
+const STORAGE_KEY    = 'paquereAdminConfig';
+
+/* ═══════════════════════════════════════════
+   PRODUTOS PADRÃO (mesmo array do index.html)
+═══════════════════════════════════════════ */
+const DEFAULT_PRODUCTS = [
+  {id:'miolo-paleta',   name:'Miolo da paleta',       cat:'Bovinos',   price:34.98, oldPrice:'',   img:'miolo_paleta',      avail:'ok', oferta:false, unit:'kg'},
+  {id:'miolo-acem',     name:'Miolo do acém',          cat:'Bovinos',   price:36.98, oldPrice:'',   img:'miolo_acem',        avail:'ok', oferta:false, unit:'kg'},
+  {id:'ponta-peito',    name:'Ponta de peito',         cat:'Bovinos',   price:36.98, oldPrice:'',   img:'ponta_peito',       avail:'ok', oferta:false, unit:'kg'},
+  {id:'ponta-peito-osso',name:'Ponta de peito com osso',cat:'Bovinos',  price:32.98, oldPrice:'',   img:'ponta_peito_osso',  avail:'ok', oferta:false, unit:'kg'},
+  {id:'acem',           name:'Acém',                   cat:'Bovinos',   price:38.98, oldPrice:'',   img:'acem',              avail:'ok', oferta:false, unit:'kg'},
+  {id:'costela-ripa',   name:'Costela ripa',           cat:'Bovinos',   price:29.98, oldPrice:36.00,img:'costela_ripa',      avail:'ok', oferta:true,  unit:'kg'},
+  {id:'costelao',       name:'Costelão',               cat:'Bovinos',   price:31.98, oldPrice:'',   img:'costelao',          avail:'ok', oferta:false, unit:'kg'},
+  {id:'picanha',        name:'Picanha',                cat:'Bovinos',   price:69.98, oldPrice:79.90,img:'picanha',           avail:'ok', oferta:true,  unit:'kg'},
+  {id:'contra-file',    name:'Contra filé',            cat:'Bovinos',   price:49.98, oldPrice:'',   img:'contra_file',       avail:'ok', oferta:false, unit:'kg'},
+  {id:'fraldinha',      name:'Fraldinha',              cat:'Bovinos',   price:44.98, oldPrice:'',   img:'fraldinha',         avail:'ok', oferta:false, unit:'kg'},
+  {id:'fraldao',        name:'Fraldão',                cat:'Bovinos',   price:39.98, oldPrice:'',   img:'fraldinha',         avail:'ok', oferta:false, unit:'kg'},
+  {id:'bisteca-bovina', name:'Bisteca bovina',         cat:'Bovinos',   price:42.98, oldPrice:'',   img:'bovinos_osso',      avail:'ok', oferta:false, unit:'kg'},
+  {id:'osso-buco',      name:'Osso buco',              cat:'Bovinos',   price:29.98, oldPrice:'',   img:'osso_buco_real',    avail:'ok', oferta:false, unit:'kg'},
+  {id:'ling-calabresa', name:'Linguiça calabresa',     cat:'Linguiças', price:29.19, oldPrice:34.90,img:'ling_calabresa_real',avail:'ok', oferta:true, unit:'kg'},
+  {id:'ling-aurora',    name:'Linguiça Aurora',        cat:'Linguiças', price:33.09, oldPrice:'',   img:'ling_aurora_real',  avail:'ok', oferta:false, unit:'kg'},
+  {id:'ling-perdigao',  name:'Linguiça Perdigão',      cat:'Linguiças', price:38.23, oldPrice:'',   img:'ling_perdigao_real',avail:'ok', oferta:false, unit:'kg'},
+  {id:'ling-sadia',     name:'Linguiça Sadia',         cat:'Linguiças', price:32.89, oldPrice:'',   img:'ling_sadia_real',   avail:'ok', oferta:false, unit:'kg'},
+  {id:'coxinha-asa',    name:'Coxinha da asa',         cat:'Aves',      price:18.98, oldPrice:'',   img:'coxinha_asa_real',  avail:'ok', oferta:false, unit:'kg'},
+  {id:'file-frango',    name:'Filé de frango',         cat:'Aves',      price:26.98, oldPrice:'',   img:'file_frango_real',  avail:'ok', oferta:false, unit:'kg'},
+  {id:'bisteca-porco',  name:'Bisteca de porco',       cat:'Suínos',    price:22.98, oldPrice:'',   img:'bisteca_porco_real',avail:'ok', oferta:false, unit:'kg'},
+  {id:'lombo-suino',    name:'Lombo suíno',            cat:'Suínos',    price:24.98, oldPrice:'',   img:'lombo_suino_real',  avail:'ok', oferta:false, unit:'kg'},
+  {id:'pernil',         name:'Pernil',                 cat:'Suínos',    price:14.98, oldPrice:'',   img:'pernil_real',       avail:'ok', oferta:false, unit:'kg'},
+];
+
+const DEFAULT_COMBOS = [
+  {id:'combo-churrasco-familia', name:'Combo Churrasco Família', price:179.90,
+   items:['1kg picanha ou contra filé','1kg linguiça','1kg coxinha da asa','1kg costela ripa']},
+  {id:'combo-semana', name:'Combo da Semana', price:89.90,
+   items:['1kg acém','1kg filé de frango','1kg pernil']},
+  {id:'combo-brasa', name:'Combo Brasa Econômico', price:129.90,
+   items:['1kg fraldinha','1kg linguiça calabresa','1kg costela ripa']},
+];
+
+const DEFAULT_INFO = {
+  phone:   '5518981309332',
+  insta:   '@mercadopaquere',
+  addr:    'Cabo PM Marcos Volnei Guerra, 13',
+  city:    'Araçatuba — SP',
+  hoursWk: '7h às 20h',
+  hoursSun:'7h às 13h',
+  delivery:'Entrega local sob consulta.',
+};
+
+/* ═══════════════════════════════════════════
+   ESTADO
+═══════════════════════════════════════════ */
+let config = null;
+
+/* ═══════════════════════════════════════════
+   LOGIN
+═══════════════════════════════════════════ */
+document.getElementById('pwdInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+
+function doLogin() {
+  const val = document.getElementById('pwdInput').value;
+  if (val === ADMIN_PASSWORD) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    loadConfig();
+  } else {
+    document.getElementById('loginErr').textContent = 'Senha incorreta. Tente novamente.';
+    document.getElementById('pwdInput').value = '';
+    document.getElementById('pwdInput').focus();
+  }
+}
+
+function doLogout() {
+  if (confirm('Sair do painel? Certifique-se de salvar antes.')) {
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('pwdInput').value = '';
+    document.getElementById('loginErr').textContent = '';
+  }
+}
+
+/* ═══════════════════════════════════════════
+   CARREGAR CONFIG
+═══════════════════════════════════════════ */
+function loadConfig() {
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch(e) {}
+
+  if (saved) {
+    config = saved;
+    const bar = document.getElementById('statusBar');
+    bar.style.display = 'flex';
+    document.getElementById('statusText').textContent = 'Configuração salva carregada';
+    document.getElementById('statusDate').textContent =
+      '— última edição: ' + new Date(saved.lastUpdated).toLocaleString('pt-BR');
+    document.getElementById('lastSaveLabel').textContent =
+      'Salvo: ' + new Date(saved.lastUpdated).toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+  } else {
+    config = {
+      products: JSON.parse(JSON.stringify(DEFAULT_PRODUCTS)),
+      combos:   JSON.parse(JSON.stringify(DEFAULT_COMBOS)),
+      info:     {...DEFAULT_INFO},
+      lastUpdated: null,
+    };
+  }
+
+  renderProducts();
+  renderCombos();
+  renderInfo();
+  updateExportSummary();
+}
+
+/* ═══════════════════════════════════════════
+   RENDER PRODUTOS
+═══════════════════════════════════════════ */
+function renderProducts() {
+  const tbody = document.getElementById('prodTbody');
+  tbody.innerHTML = '';
+  config.products.forEach(prod => {
+    const tr = document.createElement('tr');
+    tr.className = 'prod-row';
+    tr.dataset.search = prod.name.toLowerCase() + ' ' + prod.cat.toLowerCase();
+    tr.innerHTML = `
+      <td data-label="Produto" style="display:flex;align-items:center;gap:12px;min-width:180px">
+        <div class="prod-img img-${prod.img}" style="background-image:url('assets/images/imagem-${imgNum(prod.img)}.webp')"></div>
+        <div>
+          <span class="prod-name">${prod.name}</span>
+          <span class="prod-cat">${prod.cat}</span>
+        </div>
+      </td>
+      <td data-label="Preço atual">
+        <div style="display:flex;align-items:center;gap:4px">
+          <span style="color:var(--muted);font-size:13px">R$</span>
+          <input class="price-input" type="number" step="0.01" min="0"
+            value="${prod.price.toFixed(2)}"
+            onchange="updateProd('${prod.id}','price',parseFloat(this.value)||0)"
+            aria-label="Preço de ${prod.name}"/>
+          <span class="price-unit">/${prod.unit}</span>
+        </div>
+      </td>
+      <td data-label="Preço riscado">
+        <div style="display:flex;align-items:center;gap:4px">
+          <span style="color:var(--muted);font-size:13px">R$</span>
+          <input class="old-input" type="number" step="0.01" min="0"
+            value="${prod.oldPrice || ''}"
+            placeholder="—"
+            onchange="updateProd('${prod.id}','oldPrice',parseFloat(this.value)||'')"
+            aria-label="Preço riscado de ${prod.name}"/>
+        </div>
+      </td>
+      <td data-label="Disponibilidade">
+        <div class="avail-wrap">
+          <div class="avail-dot ${prod.avail}"></div>
+          <select class="avail-select" onchange="updateProd('${prod.id}','avail',this.value)"
+            aria-label="Disponibilidade de ${prod.name}">
+            <option value="ok"  ${prod.avail==='ok'  ?'selected':''}>✅ Disponível</option>
+            <option value="low" ${prod.avail==='low' ?'selected':''}>⚠️ Pouco estoque</option>
+            <option value="out" ${prod.avail==='out' ?'selected':''}>❌ Esgotado</option>
+          </select>
+        </div>
+      </td>
+      <td data-label="Destaque oferta">
+        <label class="toggle-wrap toggle" title="Exibir no bloco de Ofertas">
+          <input type="checkbox" ${prod.oferta?'checked':''}
+            onchange="updateProd('${prod.id}','oferta',this.checked)"
+            aria-label="Destaque de ${prod.name}"/>
+          <span class="slider"></span>
+        </label>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+/* ═══════════════════════════════════════════
+   RENDER COMBOS
+═══════════════════════════════════════════ */
+function renderCombos() {
+  const grid = document.getElementById('comboGrid');
+  grid.innerHTML = '';
+  config.combos.forEach(combo => {
+    const div = document.createElement('div');
+    div.className = 'combo-card-adm';
+    div.innerHTML = `
+      <h3>${combo.name}</h3>
+      <ul>${combo.items.map(i=>`<li>${i}</li>`).join('')}</ul>
+      <div class="combo-price-row">
+        <label>Preço do combo</label>
+        <span style="color:var(--muted);font-size:13px;margin-left:8px">R$</span>
+        <input class="price-input" type="number" step="0.01" min="0"
+          value="${combo.price.toFixed(2)}"
+          onchange="updateCombo('${combo.id}',parseFloat(this.value)||0)"
+          aria-label="Preço do ${combo.name}"
+          style="width:130px"/>
+      </div>`;
+    grid.appendChild(div);
+  });
+}
+
+/* ═══════════════════════════════════════════
+   RENDER INFO
+═══════════════════════════════════════════ */
+function renderInfo() {
+  document.getElementById('storePhone').value  = config.info.phone   || '';
+  document.getElementById('storeInsta').value  = config.info.insta   || '';
+  document.getElementById('storeAddr').value   = config.info.addr    || '';
+  document.getElementById('storeCity').value   = config.info.city    || '';
+  document.getElementById('hoursWeek').value   = config.info.hoursWk || '';
+  document.getElementById('hoursSun').value    = config.info.hoursSun|| '';
+  document.getElementById('deliveryInfo').value= config.info.delivery|| '';
+}
+
+/* ═══════════════════════════════════════════
+   ATUALIZAR DADOS
+═══════════════════════════════════════════ */
+function updateProd(id, field, value) {
+  const p = config.products.find(p => p.id === id);
+  if (p) p[field] = value;
+
+  // Atualiza o dot de disponibilidade na linha
+  if (field === 'avail') {
+    const row = document.querySelector(`[data-search]`);
+    const rows = document.querySelectorAll('.prod-row');
+    rows.forEach(r => {
+      const sel = r.querySelector('select[aria-label]');
+      if (sel && sel.getAttribute('aria-label').includes(p.name)) {
+        const dot = r.querySelector('.avail-dot');
+        if (dot) { dot.className = 'avail-dot ' + value; }
+      }
+    });
+  }
+}
+
+function updateCombo(id, price) {
+  const c = config.combos.find(c => c.id === id);
+  if (c) c.price = price;
+}
+
+function collectInfo() {
+  config.info.phone    = document.getElementById('storePhone').value.trim();
+  config.info.insta    = document.getElementById('storeInsta').value.trim();
+  config.info.addr     = document.getElementById('storeAddr').value.trim();
+  config.info.city     = document.getElementById('storeCity').value.trim();
+  config.info.hoursWk  = document.getElementById('hoursWeek').value.trim();
+  config.info.hoursSun = document.getElementById('hoursSun').value.trim();
+  config.info.delivery = document.getElementById('deliveryInfo').value.trim();
+}
+
+/* ═══════════════════════════════════════════
+   SALVAR
+═══════════════════════════════════════════ */
+function saveAll() {
+  collectInfo();
+  config.lastUpdated = new Date().toISOString();
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+    const timeStr = new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+    document.getElementById('lastSaveLabel').textContent = 'Salvo: ' + timeStr;
+    showToast('✅ Alterações salvas com sucesso!');
+    updateExportSummary();
+  } catch(e) {
+    showToast('⚠️ Erro ao salvar. Tente exportar o JSON.');
+  }
+}
+
+/* ═══════════════════════════════════════════
+   EXPORTAR / IMPORTAR JSON
+═══════════════════════════════════════════ */
+function buildJSON() {
+  collectInfo();
+  config.lastUpdated = new Date().toISOString();
+  config.version = '1.0';
+  return JSON.stringify(config, null, 2);
+}
+
+function downloadJSON() {
+  const blob = new Blob([buildJSON()], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'config.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showToast('📄 config.json baixado! Faça o upload no servidor.');
+}
+
+function importJSON() {
+  document.getElementById('importFile').click();
+}
+
+function handleImport(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const imported = JSON.parse(ev.target.result);
+      if (!imported.products || !imported.combos) {
+        showToast('⚠️ Arquivo inválido.');
+        return;
+      }
+      config = imported;
+      renderProducts();
+      renderCombos();
+      renderInfo();
+      updateExportSummary();
+      showToast('✅ Configuração importada com sucesso!');
+    } catch(err) {
+      showToast('⚠️ Erro ao ler o arquivo JSON.');
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+function updateExportSummary() {
+  const activeCount = config.products.filter(p => p.avail !== 'out').length;
+  const outCount    = config.products.filter(p => p.avail === 'out').length;
+  const ofertaCount = config.products.filter(p => p.oferta).length;
+  document.getElementById('exportSummary').innerHTML =
+    `${activeCount} produtos ativos · ${outCount} esgotados · ${ofertaCount} em destaque · ${config.combos.length} combos`;
+}
+
+/* ═══════════════════════════════════════════
+   TABS
+═══════════════════════════════════════════ */
+function showTab(name) {
+  document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('pane-' + name).classList.add('active');
+  event.currentTarget.classList.add('active');
+  if (name === 'exportar') updateExportSummary();
+}
+
+/* ═══════════════════════════════════════════
+   BUSCA NA TABELA
+═══════════════════════════════════════════ */
+function filterProdTable() {
+  const q = document.getElementById('prodSearch').value.toLowerCase();
+  document.querySelectorAll('.prod-row').forEach(row => {
+    row.style.display = row.dataset.search.includes(q) ? '' : 'none';
+  });
+}
+
+/* ═══════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════ */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._tTimer);
+  window._tTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+/* ═══════════════════════════════════════════
+   HELPER — número da imagem por id
+═══════════════════════════════════════════ */
+const IMG_MAP = {
+  bovinos_trad:3,bovinos_premium:4,costelas:5,bovinos_osso:6,linguicas:7,aves:8,suinos:9,
+  miolo_paleta:10,miolo_acem:11,ponta_peito:12,ponta_peito_osso:13,acem:14,
+  costela_ripa:15,costelao:16,picanha:17,contra_file:18,fraldinha:19,
+  linguicas_premium:20,osso_buco_real:21,ling_calabresa_real:22,ling_aurora_real:23,
+  ling_perdigao_real:24,ling_sadia_real:25,coxinha_asa_real:26,file_frango_real:27,
+  bisteca_porco_real:28,lombo_suino_real:29,pernil_real:30,
+};
+function imgNum(key) {
+  const n = IMG_MAP[key];
+  return n ? String(n).padStart(3,'0') : '004';
+}
+</script>
+</body>
+</html>
