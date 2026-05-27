@@ -287,6 +287,63 @@ button,[data-add],[data-qty],[data-open-cart],[data-close-cart],[data-filter]{to
   }
 }
 
+
+/* ===== AJUSTE FINAL DO LOADING — DESKTOP + MOBILE =====
+   Corrige o corte no desktop e mantém "MERCADO PAQUERÊ" em linha única.
+*/
+#loading-screen .ls-logo-wrap{
+  width:min(96vw,1180px) !important;
+  max-width:1180px !important;
+  padding-inline:10px !important;
+}
+
+#loading-screen .ls-title{
+  width:100% !important;
+  max-width:100% !important;
+  white-space:nowrap !important;
+  text-align:center !important;
+  overflow:visible !important;
+  font-size:clamp(32px,5.05vw,66px) !important;
+  letter-spacing:clamp(.012em,.24vw,.052em) !important;
+  line-height:1 !important;
+}
+
+#loading-screen .ls-sub{
+  white-space:nowrap !important;
+  text-align:center !important;
+}
+
+@media(max-width:760px){
+  #loading-screen .ls-logo-wrap{
+    width:100% !important;
+    max-width:100% !important;
+    padding-inline:8px !important;
+  }
+
+  #loading-screen .ls-title{
+    font-size:clamp(22px,6.65vw,34px) !important;
+    letter-spacing:.038em !important;
+    line-height:1.02 !important;
+  }
+
+  #loading-screen .ls-sub{
+    font-size:11px !important;
+    letter-spacing:.24em !important;
+  }
+}
+
+@media(max-width:380px){
+  #loading-screen .ls-title{
+    font-size:clamp(20px,6.15vw,25px) !important;
+    letter-spacing:.028em !important;
+  }
+
+  #loading-screen .ls-sub{
+    font-size:10px !important;
+    letter-spacing:.20em !important;
+  }
+}
+
 </style>
 
 <!-- Google Analytics 4 — substitua G-XXXXXXXXXX pelo seu ID real -->
@@ -803,6 +860,122 @@ let lastAddedId = null;
 const money = v => v.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
 const stepFor = item => item.unit === 'combo' ? 1 : 0.5;
 
+// ── Integração com admin.html/config.json ──────────────────
+const ADMIN_CONFIG_PROMISE = (async function loadAdminConfig() {
+  let cfg = null;
+
+  try {
+    const res = await fetch('config.json?v=' + Date.now(), { cache: 'no-store' });
+    if (res.ok) cfg = await res.json();
+  } catch (e) {
+    console.warn('config.json não encontrado. Usando preços padrão do HTML.');
+  }
+
+  if (!cfg) {
+    try {
+      cfg = JSON.parse(localStorage.getItem('paquereAdminConfig'));
+    } catch (e) {}
+  }
+
+  return cfg;
+})();
+
+function applyAdminConfig(cfg) {
+  if (!cfg) return;
+
+  if (Array.isArray(cfg.products)) {
+    cfg.products.forEach(adminProd => {
+      const item = itemMap[adminProd.id];
+      if (!item) return;
+
+      if (adminProd.price !== undefined && adminProd.price !== '') {
+        const price = Number(adminProd.price);
+        if (!Number.isNaN(price)) item.price = price;
+      }
+
+      item.oldPrice = adminProd.oldPrice ? Number(adminProd.oldPrice) : null;
+      item.avail = adminProd.avail || 'ok';
+      item.oferta = !!adminProd.oferta;
+    });
+  }
+
+  if (Array.isArray(cfg.combos)) {
+    cfg.combos.forEach(adminCombo => {
+      const item = itemMap[adminCombo.id];
+      if (!item) return;
+
+      const price = Number(adminCombo.price);
+      if (!Number.isNaN(price)) item.price = price;
+    });
+  }
+}
+
+function syncCardPricesAndAvailability() {
+  document.querySelectorAll('.product-card, .oferta-card, .combo-card').forEach(card => {
+    const btn = card.querySelector('[data-add]');
+    if (!btn) return;
+
+    const item = itemMap[btn.dataset.add];
+    if (!item) return;
+
+    const priceEl = card.querySelector('.product-price');
+    if (priceEl) {
+      const suffix = item.unit === 'kg' ? '<small>/kg</small>' : '';
+      priceEl.innerHTML = money(item.price) + suffix;
+    }
+
+    const oldEl = card.querySelector('.old-price');
+    if (oldEl) {
+      if (item.oldPrice) {
+        oldEl.textContent = money(Number(item.oldPrice)) + (item.unit === 'kg' ? '/kg' : '');
+        oldEl.style.display = '';
+      } else {
+        oldEl.style.display = 'none';
+      }
+    }
+
+    btn.disabled = false;
+    btn.style.background = '';
+    btn.style.color = '';
+    btn.style.cursor = '';
+    btn.textContent = item.unit === 'combo' ? 'Adicionar combo' : 'Adicionar';
+
+    const imgEl = card.querySelector('.product-img, .card-img, .combo-img');
+    if (imgEl) {
+      imgEl.querySelectorAll('.out-badge, .low-badge').forEach(badge => badge.remove());
+    }
+
+    if (item.avail === 'out') {
+      btn.disabled = true;
+      btn.textContent = 'Esgotado';
+      btn.style.background = 'rgba(255,255,255,.08)';
+      btn.style.color = 'var(--muted)';
+      btn.style.cursor = 'not-allowed';
+
+      if (imgEl) {
+        const badge = document.createElement('span');
+        badge.className = 'out-badge';
+        badge.textContent = '❌ Esgotado';
+        badge.style.cssText = 'position:absolute;top:12px;right:12px;background:rgba(198,31,47,.9);color:#fff;font-size:11px;font-weight:900;padding:5px 10px;border-radius:999px;letter-spacing:.5px;z-index:3;';
+        imgEl.style.position = 'relative';
+        imgEl.appendChild(badge);
+      }
+    }
+
+    if (item.avail === 'low') {
+      if (imgEl) {
+        const badge = document.createElement('span');
+        badge.className = 'low-badge';
+        badge.textContent = '⚠️ Pouco estoque';
+        badge.style.cssText = 'position:absolute;top:12px;right:12px;background:rgba(217,169,75,.92);color:#1b120e;font-size:11px;font-weight:900;padding:5px 10px;border-radius:999px;letter-spacing:.5px;z-index:3;';
+        imgEl.style.position = 'relative';
+        imgEl.appendChild(badge);
+      }
+    }
+  });
+}
+
+
 // ── Debounce ──────────────────────────────────────────────
 function debounce(fn, ms) {
   let t;
@@ -831,6 +1004,12 @@ function showToast(text) {
 function addItem(id) {
   const item = itemMap[id];
   if (!item) return;
+
+  if (item.avail === 'out') {
+    showToast(`${item.name} está esgotado hoje`);
+    return;
+  }
+
   lastAddedId = id;
   cart[id] = Number(((cart[id] || 0) + (item.unit === 'combo' ? 1 : 1)).toFixed(2)) * 1;
   saveCart();
@@ -1140,9 +1319,15 @@ window.openCart  = openCart;
 window.closeCart = closeCart;
 
 // ── Init ──────────────────────────────────────────────────
-bindButtons();
-renderCart();
-applyFilters();
+(async function initSite() {
+  const cfg = await ADMIN_CONFIG_PROMISE;
+
+  applyAdminConfig(cfg);
+  bindButtons();
+  syncCardPricesAndAvailability();
+  renderCart();
+  applyFilters();
+})();
 
 // ── Loading screen — CORREÇÃO: fallback máximo 1800 ms ────
 (function() {
