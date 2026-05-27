@@ -457,6 +457,22 @@ const DEFAULT_PRODUCTS = [
   {id:'bisteca-porco',  name:'Bisteca de porco',       cat:'Suínos',    price:22.98, oldPrice:'',   img:'bisteca_porco_real',avail:'ok', oferta:false, unit:'kg'},
   {id:'lombo-suino',    name:'Lombo suíno',            cat:'Suínos',    price:24.98, oldPrice:'',   img:'lombo_suino_real',  avail:'ok', oferta:false, unit:'kg'},
   {id:'pernil',         name:'Pernil',                 cat:'Suínos',    price:14.98, oldPrice:'',   img:'pernil_real',       avail:'ok', oferta:false, unit:'kg'},
+  {id:'alcatra', name:'Alcatra', cat:'Bovinos', price:49.98, oldPrice:'', img:'alcatra_premium', avail:'ok', oferta:false, unit:'kg'},
+  {id:'maminha', name:'Maminha', cat:'Bovinos', price:54.98, oldPrice:'', img:'maminha_premium', avail:'ok', oferta:false, unit:'kg'},
+  {id:'cupim', name:'Cupim', cat:'Bovinos', price:39.98, oldPrice:'', img:'cupim_premium', avail:'ok', oferta:false, unit:'kg'},
+  {id:'coxao-mole', name:'Coxão mole', cat:'Bovinos', price:39.98, oldPrice:'', img:'coxao_mole_premium', avail:'ok', oferta:false, unit:'kg'},
+  {id:'coxao-duro', name:'Coxão duro', cat:'Bovinos', price:36.98, oldPrice:'', img:'coxao_duro_premium', avail:'ok', oferta:false, unit:'kg'},
+  {id:'lagarto', name:'Lagarto', cat:'Bovinos', price:38.98, oldPrice:'', img:'lagarto_premium', avail:'ok', oferta:false, unit:'kg'},
+  {id:'musculo', name:'Músculo', cat:'Bovinos', price:29.98, oldPrice:'', img:'musculo_premium', avail:'ok', oferta:false, unit:'kg'},
+  {id:'bife-ancho', name:'Bife ancho', cat:'Bovinos', price:79.98, oldPrice:'', img:'bife_ancho_premium', avail:'ok', oferta:false, unit:'kg'},
+  {id:'chuleta', name:'Chuleta', cat:'Bovinos', price:42.98, oldPrice:'', img:'chuleta_premium', avail:'ok', oferta:false, unit:'kg'},
+  {id:'costelinha-suina', name:'Costelinha suína', cat:'Suínos', price:24.98, oldPrice:'', img:'costelinha_suina_premium', avail:'ok', oferta:false, unit:'kg'},
+  {id:'panceta', name:'Panceta', cat:'Suínos', price:24.98, oldPrice:'', img:'panceta_premium', avail:'ok', oferta:false, unit:'kg'},
+  {id:'paleta-suina', name:'Paleta suína', cat:'Suínos', price:18.98, oldPrice:'', img:'paleta_suina_premium', avail:'ok', oferta:false, unit:'kg'},
+  {id:'copa-lombo', name:'Copa lombo', cat:'Suínos', price:29.98, oldPrice:'', img:'copa_lombo_premium', avail:'ok', oferta:false, unit:'kg'},
+  {id:'sobrecoxa-frango', name:'Sobrecoxa de frango', cat:'Aves', price:16.98, oldPrice:'', img:'sobrecoxa_frango_premium', avail:'ok', oferta:false, unit:'kg'},
+  {id:'meio-asa', name:'Meio da asa', cat:'Aves', price:18.98, oldPrice:'', img:'meio_asa_premium', avail:'ok', oferta:false, unit:'kg'},
+  {id:'sassami', name:'Sassami', cat:'Aves', price:27.98, oldPrice:'', img:'sassami_premium', avail:'ok', oferta:false, unit:'kg'},
 ];
 
 const DEFAULT_COMBOS = [
@@ -515,12 +531,28 @@ function doLogout() {
 /* ═══════════════════════════════════════════
    CARREGAR CONFIG
 ═══════════════════════════════════════════ */
+
+function mergeConfigWithDefaults(saved) {
+  const savedProducts = Array.isArray(saved && saved.products) ? saved.products : [];
+  const savedCombos   = Array.isArray(saved && saved.combos) ? saved.combos : [];
+  const productById = Object.fromEntries(savedProducts.map(p => [p.id, p]));
+  const comboById   = Object.fromEntries(savedCombos.map(c => [c.id, c]));
+
+  return {
+    products: DEFAULT_PRODUCTS.map(p => ({...p, ...(productById[p.id] || {})})),
+    combos:   DEFAULT_COMBOS.map(c => ({...c, ...(comboById[c.id] || {})})),
+    info:     {...DEFAULT_INFO, ...((saved && saved.info) || {})},
+    lastUpdated: (saved && saved.lastUpdated) || null,
+    version: (saved && saved.version) || '1.1'
+  };
+}
+
 function loadConfig() {
   let saved = null;
   try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch(e) {}
 
   if (saved) {
-    config = saved;
+    config = mergeConfigWithDefaults(saved);
     const bar = document.getElementById('statusBar');
     bar.style.display = 'flex';
     document.getElementById('statusText').textContent = 'Configuração salva carregada';
@@ -701,7 +733,7 @@ function saveAll() {
 function buildJSON() {
   collectInfo();
   config.lastUpdated = new Date().toISOString();
-  config.version = '1.0';
+  config.version = '1.1';
   return JSON.stringify(config, null, 2);
 }
 
@@ -730,7 +762,7 @@ function handleImport(e) {
         showToast('⚠️ Arquivo inválido.');
         return;
       }
-      config = imported;
+      config = mergeConfigWithDefaults(imported);
       renderProducts();
       renderCombos();
       renderInfo();
