@@ -1,0 +1,290 @@
+{
+  "products": [
+    {
+      "id": "miolo-paleta",
+      "name": "Miolo da paleta",
+      "cat": "Bovinos",
+      "price": 35.48,
+      "oldPrice": "",
+      "img": "miolo_paleta",
+      "avail": "ok",
+      "oferta": false,
+      "unit": "kg"
+    },
+    {
+      "id": "miolo-acem",
+      "name": "Miolo do acém",
+      "cat": "Bovinos",
+      "price": 36.98,
+      "oldPrice": "",
+      "img": "miolo_acem",
+      "avail": "ok",
+      "oferta": false,
+      "unit": "kg"
+    },
+    {
+      "id": "ponta-peito",
+      "name": "Ponta de peito",
+      "cat": "Bovinos",
+      "price": 36.98,
+      "oldPrice": "",
+      "img": "ponta_peito",
+      "avail": "ok",
+      "oferta": false,
+      "unit": "kg"
+    },
+    {
+      "id": "ponta-peito-osso",
+      "name": "Ponta de peito com osso",
+      "cat": "Bovinos",
+      "price": 32.98,
+      "oldPrice": "",
+      "img": "ponta_peito_osso",
+      "avail": "ok",
+      "oferta": false,
+      "unit": "kg"
+    },
+    {
+      "id": "acem",
+      "name": "Acém",
+      "cat": "Bovinos",
+      "price": 38.98,
+      "oldPrice": "",
+      "img": "acem",
+      "avail": "ok",
+      "oferta": false,
+      "unit": "kg"
+    },
+    {
+      "id": "costela-ripa",
+      "name": "Costela ripa",
+      "cat": "Bovinos",
+      "price": 29.98,
+      "oldPrice": 36,
+      "img": "costela_ripa",
+      "avail": "ok",
+      "oferta": true,
+      "unit": "kg"
+    },
+    {
+      "id": "costelao",
+      "name": "Costelão",
+      "cat": "Bovinos",
+      "price": 31.98,
+      "oldPrice": "",
+      "img": "costelao",
+      "avail": "ok",
+      "oferta": false,
+      "unit": "kg"
+    },
+    {
+      "id": "picanha",
+      "name": "Picanha",
+      "cat": "Bovinos",
+      "price": 69.98,
+      "oldPrice": 79.9,
+      "img": "picanha",
+      "avail": "ok",
+      "oferta": true,
+      "unit": "kg"
+    },
+    {
+      "id": "contra-file",
+      "name": "Contra filé",
+      "cat": "Bovinos",
+      "price": 49.98,
+      "oldPrice": "",
+      "img": "contra_file",
+      "avail": "ok",
+      "oferta": false,
+      "unit": "kg"
+    },
+    {
+      "id": "fraldinha",
+      "name": "Fraldinha",
+      "cat": "Bovinos",
+      "price": 44.98,
+      "oldPrice": "",
+      "img": "fraldinha",
+      "avail": "ok",
+      "oferta": false,
+      "unit": "kg"
+    },
+    {
+      "id": "fraldao",
+      "name": "Fraldão",
+      "cat": "Bovinos",
+      "price": 39.98,
+      "oldPrice": "",
+      "img": "fraldinha",
+      "avail": "ok",
+      "oferta": false,
+      "unit": "kg"
+    },
+    {
+      "id": "bisteca-bovina",
+      "name": "Bisteca bovina",
+      "cat": "Bovinos",
+      "price": 42.98,
+      "oldPrice": "",
+      "img": "bovinos_osso",
+      "avail": "ok",
+      "oferta": false,
+      "unit": "kg"
+    },
+    {
+      "id": "osso-buco",
+      "name": "Osso buco",
+      "cat": "Bovinos",
+      "price": 29.98,
+      "oldPrice": "",
+      "img": "osso_buco_real",
+      "avail": "ok",
+      "oferta": false,
+      "unit": "kg"
+    },
+    {
+      "id": "ling-calabresa",
+      "name": "Linguiça calabresa",
+      "cat": "Linguiças",
+      "price": 29.19,
+      "oldPrice": 34.9,
+      "img": "ling_calabresa_real",
+      "avail": "ok",
+      "oferta": true,
+      "unit": "kg"
+    },
+    {
+      "id": "ling-aurora",
+      "name": "Linguiça Aurora",
+      "cat": "Linguiças",
+      "price": 33.09,
+      "oldPrice": "",
+      "img": "ling_aurora_real",
+      "avail": "ok",
+      "oferta": false,
+      "unit": "kg"
+    },
+    {
+      "id": "ling-perdigao",
+      "name": "Linguiça Perdigão",
+      "cat": "Linguiças",
+      "price": 38.23,
+      "oldPrice": "",
+      "img": "ling_perdigao_real",
+      "avail": "ok",
+      "oferta": false,
+      "unit": "kg"
+    },
+    {
+      "id": "ling-sadia",
+      "name": "Linguiça Sadia",
+      "cat": "Linguiças",
+      "price": 32.89,
+      "oldPrice": "",
+      "img": "ling_sadia_real",
+      "avail": "ok",
+      "oferta": false,
+      "unit": "kg"
+    },
+    {
+      "id": "coxinha-asa",
+      "name": "Coxinha da asa",
+      "cat": "Aves",
+      "price": 18.98,
+      "oldPrice": "",
+      "img": "coxinha_asa_real",
+      "avail": "ok",
+      "oferta": false,
+      "unit": "kg"
+    },
+    {
+      "id": "file-frango",
+      "name": "Filé de frango",
+      "cat": "Aves",
+      "price": 26.98,
+      "oldPrice": "",
+      "img": "file_frango_real",
+      "avail": "ok",
+      "oferta": false,
+      "unit": "kg"
+    },
+    {
+      "id": "bisteca-porco",
+      "name": "Bisteca de porco",
+      "cat": "Suínos",
+      "price": 22.98,
+      "oldPrice": "",
+      "img": "bisteca_porco_real",
+      "avail": "ok",
+      "oferta": false,
+      "unit": "kg"
+    },
+    {
+      "id": "lombo-suino",
+      "name": "Lombo suíno",
+      "cat": "Suínos",
+      "price": 24.98,
+      "oldPrice": "",
+      "img": "lombo_suino_real",
+      "avail": "ok",
+      "oferta": false,
+      "unit": "kg"
+    },
+    {
+      "id": "pernil",
+      "name": "Pernil",
+      "cat": "Suínos",
+      "price": 14.98,
+      "oldPrice": "",
+      "img": "pernil_real",
+      "avail": "ok",
+      "oferta": false,
+      "unit": "kg"
+    }
+  ],
+  "combos": [
+    {
+      "id": "combo-churrasco-familia",
+      "name": "Combo Churrasco Família",
+      "price": 179.9,
+      "items": [
+        "1kg picanha ou contra filé",
+        "1kg linguiça",
+        "1kg coxinha da asa",
+        "1kg costela ripa"
+      ]
+    },
+    {
+      "id": "combo-semana",
+      "name": "Combo da Semana",
+      "price": 89.9,
+      "items": [
+        "1kg acém",
+        "1kg filé de frango",
+        "1kg pernil"
+      ]
+    },
+    {
+      "id": "combo-brasa",
+      "name": "Combo Brasa Econômico",
+      "price": 129.9,
+      "items": [
+        "1kg fraldinha",
+        "1kg linguiça calabresa",
+        "1kg costela ripa"
+      ]
+    }
+  ],
+  "info": {
+    "phone": "5518981309332",
+    "insta": "@mercadopaquere",
+    "addr": "Cabo PM Marcos Volnei Guerra, 13",
+    "city": "Araçatuba — SP",
+    "hoursWk": "7h às 20h",
+    "hoursSun": "7h às 13h",
+    "delivery": "Entrega local sob consulta."
+  },
+  "lastUpdated": "2026-05-27T01:13:05.410Z",
+  "version": "1.0"
+}
