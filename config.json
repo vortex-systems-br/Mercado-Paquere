@@ -4,7 +4,7 @@
       "id": "miolo-paleta",
       "name": "Miolo da paleta",
       "cat": "Bovinos",
-      "price": 35.48,
+      "price": 34.98,
       "oldPrice": "",
       "img": "miolo_paleta",
       "avail": "ok",
@@ -285,6 +285,6 @@
     "hoursSun": "7h às 13h",
     "delivery": "Entrega local sob consulta."
   },
-  "lastUpdated": "2026-05-27T01:13:05.410Z",
+  "lastUpdated": "2026-05-27T01:27:20.996Z",
   "version": "1.0"
 }
